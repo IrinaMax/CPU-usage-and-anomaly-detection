@@ -114,14 +114,24 @@ arima(d.y, order = c(0,0,1))
 arima(d.y, order = c(1,0,1))
 arima(d.y, order = c(1,0,3))
 
-boxplot(y~cycle(y), horizontal = T)    ## shows there are outliers here
-plot(h1)
+boxplot(y~cycle(y), main= "Boxplot of CPU outliers", horizontal = T)    ## shows there are outliers here
+plot(h1, main = "CPU usage")
 abline(reg=lm(y~time(y)))
 
  arima.h1 <- arima.sim(model = list(y,x), n = 120)
- summary(arima.h1)
+> summary(arima.h1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-2.0530 -0.7187 -0.1901 -0.0262  0.5724  3.2410 
  h1.ts <- ts(h1)
  h1.ts
+ > summary(h1.ts)
+      time             cpu_usage     
+ Min.   :1.476e+09   Min.   :0.1032  
+ 1st Qu.:1.476e+09   1st Qu.:0.4326  
+ Median :1.476e+09   Median :0.5003  
+ Mean   :1.476e+09   Mean   :0.5003  
+ 3rd Qu.:1.476e+09   3rd Qu.:0.5671  
+ Max.   :1.476e+09   Max.   :0.9439  
  plot(h1.ts)  
  ##  implement with all dataset too long time to processsing....  never end
  s <- ts(h1[,2], start = 1476400427, end= 1537577313, frequency = 1 )
