@@ -1,9 +1,248 @@
-library(pryr)  
-mem_used()
-mem_change(x <- 1:1000e6)  ##chenging memory.size
-set.seed(123)
-h1 <- read.csv("data.csv", nrow = 50000)
-# Defining variables
-y<- h1$cpu_usage
-d.y <- diff(y)
-t <- h1$time
+Arima model show the stationaly and differencis in the data.
+A stationary time series is one whose properties do not depend on the time at which the series is observed.
+Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
+Stationary time series will have no predictable patterns in the long-term. 
+Forvisualisation process I took the sample scope the CPU, with will show 
+
+>library(pryr)  
+>mem_used()
+>mem_change(x <- 1:1000e6)  ##chenging memory.size
+
+>set.seed(123)
+>h1 <- read.csv("data.csv", nrow = 10000)
+# Defining variables to easy fit model
+>y<- h1$cpu_usage   
+>d.y <- diff(y)   ## defference
+>t <- h1$time
+
+## Descriptive statistics and plotting
+>summary(y)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.1032  0.4326  0.5003  0.5003  0.5671  0.9439 
+
+##suitably lagged and iterated differences
+>summary(d.y) 
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-0.6418000 -0.0961700 -0.0006152 -0.0000232  0.0949100  0.6089000
+plot(t,y, main = " Arima CPU usage")  ## look plot Arima_CPU_sage
+plot(d.y, main = " CPU defference")    ##  look plot 
+
+## Dickey Fuller test for variable  shows the data is stationary, p value is significant
+## and we can accept Ho hypotesys, so the dta actualy normaly distributed
+>adf.test(y, alternative = "stationary", k=0)
+	
+  Augmented Dickey-Fuller Test
+
+data:  y
+Dickey-Fuller = -100.85, Lag order = 0, p-value = 0.01
+alternative hypothesis: stationary
+
+Warning message:
+In adf.test(y, alternative = "stationary", k = 0) :
+  p-value smaller than printed p-value
+
+>adf.test(y, alternative = "explosive", k=0)
+
+	Augmented Dickey-Fuller Test
+
+data:  y
+Dickey-Fuller = -100.85, Lag order = 0, p-value = 0.99
+alternative hypothesis: explosive
+
+Warning message:
+In adf.test(y, alternative = "explosive", k = 0) :
+  p-value smaller than printed p-value
+
+
+>summary(lm(h1$cpu_usage~h1$time))
+>plot(lm(h1$cpu_usage~h1$time))          ##  look Rplot_oesidual_vs_fitted and you will see the horizontal red line,stationary data!
+#Call:
+#lm(formula = h1$cpu_usage ~ h1$time)
+
+#Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.39706 -0.06754  0.00013  0.06704  0.44368 
+
+#Coefficients:
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept) -2.236e+02  5.120e+02  -0.437    0.662
+h1$time      1.518e-07  3.468e-07   0.438    0.662
+
+#Residual standard error: 0.1001 on 9998 degrees of freedom
+#Multiple R-squared:  1.917e-05,	Adjusted R-squared:  -8.085e-05 
+#F-statistic: 0.1916 on 1 and 9998 DF,  p-value: 0.6616
+
+>adf.test(d.y, k=0)   ## we have lag=0 in ADF test
+    	 Augmented Dickey-Fuller Test
+
+       data:  d.y
+       Dickey-Fuller = -172.24, Lag order = 0, p-value = 0.01
+       alternative hypothesis: stationary
+
+       Warning message:
+       In adf.test(d.y, k = 0) : p-value smaller than printed p-value
+
+> adf.test(d.y)         ## we have lag = 21 with let us use d.y
+
+	Augmented Dickey-Fuller Test
+
+data:  d.y
+Dickey-Fuller = -37.465, Lag order = 21, p-value = 0.01
+alternative hypothesis: stationary
+
+Warning message:
+In adf.test(d.y) : p-value smaller than printed p-value
+##ACF ( autocorrelationfunction)and PACF (partion autocorrelation function)
+>acf(y, main= " series of autocorrelation function")   ## We see that the series is stationary enough to do any kind of time 
+          ##series modelling.   (residual ac per units)
+>pacf(y, main = "series CPU")                         # correlation is  not significant coz it very short Lags
+>acf(d.y, mail = "plot series of difference:")          ## stationary
+>pacf(d.y)                                         ## dfferents PACF is kinda significant, wich said about shorl tail  
+## the autocorrelations at lags 2 and above are merely due to the 
+##propagation of the autocorrelation at lag 1. This is confirmed by the PACF plot:
+
+
+#Arima (1,0,0 PACF)
+arima(y)
+arima(y, order = c(1,0,0))
+arima(y, order = c(2,0,0))
+arima(y, order = c(0,0,1))
+arima(y, order = c(1,0,1))
+
+arima(d.y, order = c(1,0,0))
+arima(d.y, order = c(0,0,1))
+arima(d.y, order = c(1,0,1))
+arima(d.y, order = c(1,0,3))
+
+boxplot(y~cycle(y), horizontal = T)    ## shows there are outliers here
+plot(h1)
+abline(reg=lm(y~time(y)))
+
+ arima.h1 <- arima.sim(model = list(y,x), n = 120)
+ summary(arima.h1)
+ h1.ts <- ts(h1)
+ h1.ts
+ plot(h1.ts)  
+ ##  implement with all dataset too long time to processsing....  never end
+ s <- ts(h1[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+ s1 <- ts(h1, start = 1476400427, end= 1537577313, frequency = 1 )
+ ds <- (DS = decompose(s1))
+ ds
+ s1
+ locate.outliers(s, pars, cval = 3.5, types = c("AO", "LS", "TC"),
+                 delta = 0.7, n.start = 50)
+ ## Outliers usually has proportion < .10
+ ##Either combine
+ o.h1 <- subset(h1, h1$cpu_usage < 0.2)
+ o2.h1 <- subset(h1, h1$cpu_usage > 0.8)
+ head(o.h1)
+ dim(o.h1)
+ plot (o.h1)
+ head(o2.h1)
+ plot (o2.h1)
+ dim(o2.h1)
+ outliers <- rbind(o.h1, o2.h1)
+ dim(outliers)
+ plot (outliers)
+ ## or we can can be more precice by counting quantiles 
+ s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+ s1 <- ts(h, start = 1476400427, end= 1537577313, frequency = 1 )
+ ds <- (DS = decompose(s1))
+ s1
+ qu <- quantile(h[,2])
+ ## 0%         25%         50%         75%        100% 
+ ## -0.03770475  0.43259519  0.50010228  0.56767500  1.03465204 
+ dim(qu)
+ qu <- as.data.frame(qu)
+ q1 = qu[2,1]
+ q2 = qu[3,1]
+ q3 = qu[4,1]
+ iqr <- q3-q1
+ w1 <-q3-iqr
+ 1 <- q1-1.5*q1 
+ # then combine all together 
+ o.h <- subset(h1, h$cpu_usage < q1-1.5*iqr)
+ o2.h <- subset(h1, h$cpu_usage > q3 + 1.5*iqr)
+ outliers_h <- rbind(o.h, o2.h)
+ summary(outliers_h)
+ 
+ -----
+   ##  auto outliers with arima  
+arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
+ resid <- residuals(arima.fo)
+ pars <- coefs2poly(arima.fo)
+ outliers2 <- locate.outliers(resid, pars)
+ dim(outliers2)
+ plot(outliers2)
+ summary(outliers2) ##  result auto outliers 
+ 
+ ##Prediction with arima
+ library(fracdiff)
+ fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+ summary(fit.arima)
+ plot(forecast(fit.arima,h=20))
+ 
+ fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
+ summary(fitAr)
+ 
+ ******************************************
+ plot(forecast(fitAr))
+  pars <- coefs2poly(fitAr)
+ resid <- residuals(fitAr)
+ n <- length(resid)
+ z_score1 <- (h$time - mean(h$time))/sd(h$time)
+ 
+ sigma <- 1.483 * quantile(abs(resid - quantile(resid, probs = 0.5)), probs = 0.5)
+ picoefs <- c(1, ARMAtoMA(ar = -pars$macoefs, ma = -pars$arcoefs, lag.max = n-1))
+ tauIO <- resid / sigma
+ hist (mysam1$cpu_usage)
+ hist (mysam1$time)
+ 
+ plot(mysam1, plot.type='single', col=1:2)
+ pca.mysam1 <- prcomp(mysam1, scale=TRUE)
+ summary(pca.mysam1)
+ pca
+ biplot(pca.mysam1)
+ #outputs the mean of variables
+ pca.mysam1$center
+ #outputs the standard deviation of variables
+ pca.mysam1
+ pca.mysam1$scale
+ pca.mysam1$rotation
+ #compute standard deviation of each principal component
+ std_dev <- pca.mysam1$sdev
+ #compute variance
+ pr_var <- std_dev^2
+ #check variance of first 10 components
+ pr_var[1:2]
+ #proportion of variance explained
+ prop_varex <- pr_var/sum(pr_var)
+ prop_varex
+ #scree plot
+ plot(prop_varex, xlab = "Principal Component",
+      ylab = "Proportion of Variance Explained",
+      type = "b")
+ #cumulative scree plot
+ plot(cumsum(prop_varex), xlab = "Principal Component",
+      ylab = "Cumulative Proportion of Variance Explained",
+      type = "b")
+ 
+ 
+ ##---------- Markovchain
+   sparkR.session()
+ #installing SparkR from github
+ if (!require('devtools')) install.packages('devtools')
+ devtools::install_github('apache/spark@v2.0.1', subdir='R/pkg')
+ 
+ install.packages("devtools")
+ devtools::install_github("rstudio/sparklyr")
+ library(sparklyr)
+ spark_install(version = "1.6.2")
+ spark_install(version = "2.0.1")
+ sparkR.session()
+ 
+ if (nchar(Sys.getenv("SPARK_HOME")) < 1) {
+   Sys.setenv(SPARK_HOME = "/home/spark")
+ }
+ library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
+ sparkR.session(master = "local[*]", sparkConfig = list(spark.driver.memory = "2g"))
