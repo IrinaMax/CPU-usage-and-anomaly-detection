@@ -1,0 +1,9 @@
+library(pryr)  
+mem_used()
+mem_change(x <- 1:1000e6)  ##chenging memory.size
+set.seed(123)
+h1 <- read.csv("data.csv", nrow = 50000)
+# Defining variables
+y<- h1$cpu_usage
+d.y <- diff(y)
+t <- h1$time
