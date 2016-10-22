@@ -91,3 +91,8 @@ Data is not normally distributed and the p-value is significant.
                sample estimates:
                mean of x 
                0.5002827 
+it is just begining, go look othe pages https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
+and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20detection
+and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/MCLUST%20clustering%20analysis%20and%20visualisation
+and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/More%20exporatory%20and%20anomaly%20detection
+and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/SparkR%20on%20sql.Context
