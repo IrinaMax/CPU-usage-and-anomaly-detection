@@ -55,3 +55,36 @@ cluster.stats(0.01, fit$cluster, fit1$cluster)
 mydata <- data.frame(h1, fit$cluster)
 mydata
 plot(mydata)  ## you can look plot of Cluster assignment
+##Grouping and clustering bu time 
+   library(psych)   
+group <- describeBy(h1, h1$time,skew=FALSE,ranges=FALSE) 
+#0r
+group2 <- describeBy(mysam1,list(mysam1$time,mysam1$cpu_usage),
+                     skew=FALSE,ranges=FALSE,mat=TRUE)
+headTail(group)
+  1476400427      1476400428      1476400429      1476400430     
+h List,5          List,5          List,5          List,5         
+  "...       ..." "...       ..." "...       ..." "...       ..."
+t List,5          List,5          List,5          List,5     
+
+d2 <- outlier(group, cex=.2)
+dev.off()
+fit <- nnetar(tsclean(h1$cpu_usage))
+
+summary(fit)
+          Length Class        Mode     
+x         10000  ts           numeric  
+m             1  -none-       numeric  
+p             1  -none-       numeric  
+P             1  -none-       numeric  
+scalex        2  -none-       list     
+size          1  -none-       numeric  
+subset    10000  -none-       numeric  
+model        20  nnetarmodels list     
+nnetargs      0  -none-       list     
+fitted    10000  ts           numeric  
+residuals 10000  ts           numeric  
+lags          1  -none-       numeric  
+series        1  -none-       character
+method        1  -none-       character
+call          2  -none-       call     
