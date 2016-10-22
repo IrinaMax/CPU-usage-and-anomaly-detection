@@ -23,13 +23,15 @@ dim(h1)
 anom1 <- AnomalyDetectionTs(h1, period=60, plot=TRUE)
 res1$plot    ## cm Plot_anomal_CPU_usage.pdf
 
-##data into shape so we’ll start by getting a count of the number of blog 
-anomCPU24_hour <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
-summary(anomCPU24_hour)
+##data 
+anomCPU3600 <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
+summary(anomCPU3600)
+
 ## look the Rplot_anom_cpu_3600.png , it was the anomaly during one day
 #Length Class      Mode
 #anoms 2      data.frame list
 #plot  9      gg         list
+
 anomCPU24_hour$anoms   ##  show all numbers and time of anomaly
 dim(anomCPU24_hour$anoms) 
 #[1] 141   2      its was 142 anomaly during 24 hours time
