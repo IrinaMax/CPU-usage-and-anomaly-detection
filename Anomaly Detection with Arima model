@@ -177,82 +177,71 @@ abline(reg=lm(y~time(y)))
  summary(outliers_h)
  
  -----
-   ##  auto outliers with arima  
-arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
- resid <- residuals(arima.fo)
- pars <- coefs2poly(arima.fo)
- outliers2 <- locate.outliers(resid, pars)
- dim(outliers2)
- plot(outliers2)
- summary(outliers2) ##  result auto outliers 
- 
- ##Prediction with arima
- library(fracdiff)
- fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
- summary(fit.arima)
- plot(forecast(fit.arima,h=20))
- 
- fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
- summary(fitAr)
+ > ##  auto outliers with arima
+> arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
+> resid <- residuals(arima.fo)
+> pars <- coefs2poly(arima.fo)
+> outliers2 <- locate.outliers(resid, pars)
+> dim(outliers2)
+[1] 9 4
+> plot(outliers2, main ="Possible anomaly as outliers with Arima")  ## look the plot 
+> summary(outliers2) ##  result auto outliers
+  type        ind          coefhat             tstat        
+ IO :0   Min.   :2222   Min.   :-0.39496   Min.   :-4.4500  
+ AO :5   1st Qu.:4001   1st Qu.:-0.36681   1st Qu.:-3.6791  
+ LS :0   Median :4975   Median : 0.26047   Median : 3.6825  
+ TC :4   Mean   :5392   Mean   : 0.03179   Mean   : 0.5861  
+ SLS:0   3rd Qu.:7365   3rd Qu.: 0.37191   3rd Qu.: 3.9016  
+         Max.   :8587   Max.   : 0.44149   Max.   : 5.2581  
+	 
+ > ##Prediction with arima
+> library(fracdiff)
+>library("forecast", lib.loc="~/Library/R/3.3/library")
+> fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+> summary(fit.arima)
+
+Call:
+arima(x = y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+
+Coefficients:
+          ar1     ma1     sar1     sar2    sma1    sma2
+      -0.5060  0.8626  -0.9018  -0.0351  -0.463  -0.537
+s.e.   0.1537     NaN   0.0635   0.0465     NaN     NaN
+
+sigma^2 estimated as 0.01002:  log likelihood = 8823.43,  aic = -17632.86
+
+Training set error measures:
+                       ME      RMSE        MAE       MPE    MAPE      MASE       ACF1
+Training set 0.0001373833 0.1000703 0.07976704 -4.602609 17.5039 0.7055902 0.00045976
+Warning message:
+In sqrt(diag(x$var.coef)) : NaNs produced
+> > plot(forecast(fit.arima,h=20), main= "Forecast with Arima Model time series"          ## Look plot Forecast with Arima model
+> fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
+> summary(fitAr)
+Series:  
+ARIMA(0,0,0) with non-zero mean 
+
+Coefficients:
+      intercept
+         0.5003
+s.e.     0.0010
+
+sigma^2 estimated as 0.01002:  log likelihood=8826.98
+AIC=-17649.97   AICc=-17649.96   BIC=-17635.55
+
+Training set error measures:
+                       ME      RMSE        MAE       MPE     MAPE      MASE        ACF1
+Training set 9.020453e-18 0.1000949 0.07976242 -4.635183 17.50735 0.7055494 -0.00829783
  
  ******************************************
- plot(forecast(fitAr))
-  pars <- coefs2poly(fitAr)
+ plot(forecast(fitAr))    # Plot with auto arima
+ pars <- coefs2poly(fitAr)
  resid <- residuals(fitAr)
  n <- length(resid)
- z_score1 <- (h$time - mean(h$time))/sd(h$time)
+ 
  
  sigma <- 1.483 * quantile(abs(resid - quantile(resid, probs = 0.5)), probs = 0.5)
  picoefs <- c(1, ARMAtoMA(ar = -pars$macoefs, ma = -pars$arcoefs, lag.max = n-1))
  tauIO <- resid / sigma
- hist (mysam1$cpu_usage)
- hist (mysam1$time)
- 
- plot(mysam1, plot.type='single', col=1:2)
- pca.mysam1 <- prcomp(mysam1, scale=TRUE)
- summary(pca.mysam1)
- pca
- biplot(pca.mysam1)
- #outputs the mean of variables
- pca.mysam1$center
- #outputs the standard deviation of variables
- pca.mysam1
- pca.mysam1$scale
- pca.mysam1$rotation
- #compute standard deviation of each principal component
- std_dev <- pca.mysam1$sdev
- #compute variance
- pr_var <- std_dev^2
- #check variance of first 10 components
- pr_var[1:2]
- #proportion of variance explained
- prop_varex <- pr_var/sum(pr_var)
- prop_varex
- #scree plot
- plot(prop_varex, xlab = "Principal Component",
-      ylab = "Proportion of Variance Explained",
-      type = "b")
- #cumulative scree plot
- plot(cumsum(prop_varex), xlab = "Principal Component",
-      ylab = "Cumulative Proportion of Variance Explained",
-      type = "b")
  
  
- ##---------- Markovchain
-   sparkR.session()
- #installing SparkR from github
- if (!require('devtools')) install.packages('devtools')
- devtools::install_github('apache/spark@v2.0.1', subdir='R/pkg')
- 
- install.packages("devtools")
- devtools::install_github("rstudio/sparklyr")
- library(sparklyr)
- spark_install(version = "1.6.2")
- spark_install(version = "2.0.1")
- sparkR.session()
- 
- if (nchar(Sys.getenv("SPARK_HOME")) < 1) {
-   Sys.setenv(SPARK_HOME = "/home/spark")
- }
- library(SparkR, lib.loc = c(file.path(Sys.getenv("SPARK_HOME"), "R", "lib")))
- sparkR.session(master = "local[*]", sparkConfig = list(spark.driver.memory = "2g"))
