@@ -57,21 +57,21 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     str(h)
     summary(h)
     hist (h$cpu_usage) 
-## look hist_1_cpuUsage
+ ## look  plot hist_1_cpuUsage
 
      hist (h1$time)
-## look hist_2_cpuYime
-   tail(h)
+ ## look  plot hist_2_cpuYime
+     tail(h)
 
-## normalising data 
-sd(h$cpu_usage)  
-#[1] 0.1004229  standart deviation
-mean (h$cpu_usage) 
-#[1] 0.5002827     mean is 50% and it is obviouse
-z_score_h <- (h$cpu_usage - mean(h$cpu_usage))/sd(h$cpu_usage)
-head(z_score_h)
-summary(z_score_h)
-#Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#-5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
+ ## normalising data 
+    sd(h$cpu_usage)  
+ #[1] 0.1004229  standart deviation
+      mean (h$cpu_usage) 
+  #[1] 0.5002827     mean is 50% and it is obviouse
+       z_score_h <- (h$cpu_usage - mean(h$cpu_usage))/sd(h$cpu_usage)
+       head(z_score_h)
+        summary(z_score_h)
+   #Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+   #-5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
