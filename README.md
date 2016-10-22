@@ -79,7 +79,8 @@ normalising data
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
 Data is not normally distributed and the p-value is significant.
-           t.test(h$cpu_usage )
+          
+        t.test(h$cpu_usage )
                      One Sample t-test
 
                data:  h$cpu_usage
