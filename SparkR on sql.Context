@@ -1,0 +1,40 @@
+# I show here how to make SparkR session on Rstudio and how you can download big data in sql.Context
+# Lets  check and change memory if we have less then 4 GB
+
+library(pryr)
+mem_used()
+mem_change(x <- 1:2000e6)
+library(SparkR)
+sparkR.session()
+sc <- sparkR.init(master='spark://169.254.206.2:7077', sparkPackages="com.databricks:spark-csv_2.11:1.2.0")
+sqlContext <- sparkRSQL.init(sc)
+## I am open file path for upload my data to the sql.context
+h_file_path <- file.path('', 'Users','irinamahmudjanova','Desktop','CPU','data.csv')
+#now moving my data to h_df fime, and not my data distributed in SparkR
+h_df <- read.df(sqlContext, 
+                h_file_path, 
+                header='true', 
+                source = "com.databricks.spark.csv", 
+                inferSchema='true')
+nrow(h_df)  ##  Let see the data, it the same number row and colomns
+head(h_df, 10)
+dim(h_df)
+h_df_local <- collect(select(h_df,"cpu_usage"))
+str(h_df_local)
+str(h_df)
+
+## Model1 base on the dinamic quantiles and outliers
+## Outliers usually has proportion < .10
+##Either combine
+registerTempTable(h_df)
+o.h1 <- subset(h_df, h_df$cpu_usage < 0.2)
+o2.h1 <- subset(h, h_df$cpu_usage > 0.8)
+head(o.h1)
+dim(o.h1)
+plot (o.h1)
+head(o2.h1)
+plot (o2.h1)
+dim(o2.h1)
+outliers <- rbind(o.h1, o2.h1)
+dim(outliers)
+plot (outliers)
