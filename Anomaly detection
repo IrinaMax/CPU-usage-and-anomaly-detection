@@ -1,0 +1,47 @@
+##This is detection Anomaly with Package "AnomalyDetection" wich shoe very beautiful plot,
+but visualisation not possible with data 61 M and of cause I wanted to show the idea of the thispoweful package,
+so implementation base on the part of day, data cpu usage, wich still very huge but show pretty good result.
+
+install.packages("devtools")
+devtools::install_github("twitter/AnomalyDetection")
+library("AnomalyDetection", lib.loc="~/Library/R/3.3/library")
+help(AnomalyDetectionTs)
+help(AnomalyDetectionVec)
+library (data.table)
+##The expected data format is two columns – one containing a time stamp and the other a count. e.g. using the ‘raw_data’ data frame that is in scope when you add the library:
+
+library(dplyr)
+h1 <- read.csv("data.csv", nrow = 270000)
+h1 %>% head()
+dim(h1)
+
+#threshold Filter all negative anomalies and those anomalies whose magnitude is smaller 
+#than one of the specified thresholds which include: the median of the daily max values 
+#(med_max), the 95th percentile of the daily max values (p95), and the 99th percentile of 
+#the daily max values (p99).
+
+anom1 <- AnomalyDetectionTs(h1, period=60, plot=TRUE)
+res1$plot    ## cm Plot_anomal_CPU_usage.pdf
+
+##data into shape so we’ll start by getting a count of the number of blog 
+anomCPU24_hour <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
+summary(anomCPU24_hour)
+## look the Rplot_anom_cpu_3600.png , it was the anomaly during one day
+#Length Class      Mode
+#anoms 2      data.frame list
+#plot  9      gg         list
+anomCPU24_hour$anoms   ##  show all numbers and time of anomaly
+dim(anomCPU24_hour$anoms) 
+#[1] 141   2      its was 142 anomaly during 24 hours time
+
+res = AnomalyDetectionTs(h1, 
+                         max_anoms=0.02, 
+                         direction='both', 
+                         plot=TRUE)
+AnomalyDetectionTs(h1, max_anom =0.1, direction = "pos", alpha = 0.05, num_obs_per_period = 360, plot = T)
+
+install.packages("devtools")
+devtools::install_github("twitter/BreakoutDetection")
+library(BreakoutDetection)
+
+
