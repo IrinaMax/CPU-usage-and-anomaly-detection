@@ -10,17 +10,17 @@
      t <- h$time
 
 ## Descriptive statistics and plotting of cpu usage
-summary(y)   
+     summary(y)   
 ##   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##-0.0377  0.4326  0.5001  0.5003  0.5677  1.0350 
 ##suitably lagged and iterated differences
-summary(d.y)  
+     summary(d.y)  
 # plot(t,y)  ## it working loooong time, but apperently it will come up, not recomend to us it
 # plot(d.y)
 
 ## Dickey Fuller test for variable  shows the data is stationary, p value is significant
 ## and we can accept Ho hypotesys, so the dta actualy normaly distributed
-adf.test(y, alternative = "stationary", k=0)
+a     df.test(y, alternative = "stationary", k=0)
 #	Augmented Dickey-Fuller Test
 
  #data:  y
@@ -31,7 +31,7 @@ adf.test(y, alternative = "stationary", k=0)
 #  In adf.test(y, alternative = "stationary", k = 0) :
 #  p-value smaller than printed p-value
 
-adf.test(y, alternative = "explosive", k=0)
+     adf.test(y, alternative = "explosive", k=0)
 
 #Augmented Dickey-Fuller Test
 
@@ -43,7 +43,7 @@ adf.test(y, alternative = "explosive", k=0)
 #  In adf.test(y, alternative = "explosive", k = 0) :
 #    p-value smaller than printed p-value
 
-summary(lm(h$cpu_usage~h$time))
+     summary(lm(h$cpu_usage~h$time))
 #Call:
 #  lm(formula = h$cpu_usage ~ h$time)
 
@@ -62,7 +62,7 @@ summary(lm(h$cpu_usage~h$time))
 #Multiple R-squared:  4.926e-08,	Adjusted R-squared:  3.291e-08 
 #F-statistic: 3.013 on 1 and 61176885 DF,  p-value: 0.08258
 
-adf.test(d.y, k=0)   ## we have lag=0 in ADF test
+     adf.test(d.y, k=0)   ## we have lag=0 in ADF test
 #Augmented Dickey-Fuller Test
 
 #data:  d.y
@@ -71,83 +71,48 @@ adf.test(d.y, k=0)   ## we have lag=0 in ADF test
 
 #Warning message:
 # In adf.test(d.y, k = 0) : p-value smaller than printed p-value
-adf.test(d.y)         ## we have lag = 36 with and let use use d.y
+     adf.test(d.y)         ## we have lag = 36 with and let use use d.y
 
 ##ACF ( autocorrelationfunction)and PACF (partion autocorrelation function)
-acf(y)   ## Plot_1 We see that the series is stationary enough to do any kind of time 
+     acf(y)   ## Plot_1 We see that the series is stationary enough to do any kind of time 
 ##series modelling.   (residual ac per units)
-pacf(y)   # correlation is  not significant coz it very short Lags
-acf(d.y)   ## stationary
-pacf(d.y)  ## dfferents PACF is kinda significant, wich said about shorl tail  
+     pacf(y)   # correlation is  not significant coz it very short Lags
+     acf(d.y)   ## stationary
+     pacf(d.y)  ## dfferents PACF is kinda significant, wich said about shorl tail  
 ## the autocorrelations at lags 2 and above are merely due to the 
 ##propagation of the autocorrelation at lag 1. This is confirmed by the PACF plot:
 
 
 #Arima (1,0,0 PACF)
-arima(y)
-arima(y, order = c(1,0,0))
-arima(y, order = c(2,0,0))
-arima(y, order = c(0,0,1))
-arima(y, order = c(1,0,1))
+     arima(y)
+     arima(y, order = c(1,0,0))
+     arima(y, order = c(2,0,0))
+     arima(y, order = c(0,0,1))
+     arima(y, order = c(1,0,1))
 
-arima(d.y, order = c(1,0,0))
-arima(d.y, order = c(0,0,1))
-arima(d.y, order = c(1,0,1))
-arima(d.y, order = c(1,0,3))
+     arima(d.y, order = c(1,0,0))
+     arima(d.y, order = c(0,0,1))
+     arima(d.y, order = c(1,0,1))
+     arima(d.y, order = c(1,0,3))
 
-boxplot(y~cycle(y), horizontal = T)    ## shows there are outliers here
-plot(h)  
-abline(reg=lm(y~time(y)))
+     boxplot(y~cycle(y), horizontal = T)    ## shows there are outliers here
+     plot(h)  
+     abline(reg=lm(y~time(y)))
 
-arima.h1 <- arima.sim(model = list(y,x), n = 120)
-summary(arima.h1)
-h1.ts <- ts(h1)
-h1.ts
-plot(h1.ts)  
+     arima.h1 <- arima.sim(model = list(y,x), n = 120)
+     summary(arima.h1)
+     h1.ts <- ts(h1)
+     h1.ts
+     plot(h1.ts)  
 ##  implement with all dataset too long time to processsing....  never end
-s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
-summary(s)
-s1 <- ts(h1, start = 1476400427, end= 1537577313, frequency = 1 )
-ds <- (DS = decompose(s1))
-ds
-s1
+     s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+     summary(s)
+     s1 <- ts(h1, start = 1476400427, end= 1537577313, frequency = 1 )
+     ds <- (DS = decompose(s1))
+     ds
+     s1
 locate.outliers(s, pars, cval = 3.5, types = c("AO", "LS", "TC"),
                 delta = 0.7, n.start = 50)
-## Outliers usually has proportion < .10
-##Either combine
-o.h1 <- subset(h1, h1$cpu_usage < 0.2)
-o2.h1 <- subset(h1, h1$cpu_usage > 0.8)
-head(o.h1)
-dim(o.h1)
-plot (o.h1)
-head(o2.h1)
-plot (o2.h1)
-dim(o2.h1)
-outliers <- rbind(o.h1, o2.h1)
-dim(outliers)
-plot (outliers)
-
-## or we can can be more precice by counting quantiles 
-s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
-s1 <- ts(h, start = 1476400427, end= 1537577313, frequency = 1 )
-ds <- (DS = decompose(s1))
-s1
-qu <- quantile(h[,2])
-## 0%         25%         50%         75%        100% 
-## -0.03770475  0.43259519  0.50010228  0.56767500  1.03465204 
-dim(qu)
-qu <- as.data.frame(qu)
-q1 = qu[2,1]
-q2 = qu[3,1]
-q3 = qu[4,1]
-iqr <- q3-q1
-w1 <-q3-iqr
-1 <- q1-1.5*q1 
-# then combine all together 
-o.h <- subset(h1, h$cpu_usage < q1-1.5*iqr)
-o2.h <- subset(h1, h$cpu_usage > q3 + 1.5*iqr)
-outliers_h <- rbind(o.h, o2.h)
-summary(outliers_h)
 
 -----
   ##  auto outliers with arima  
@@ -167,3 +132,4 @@ plot(forecast(fit.arima,h=20))
 
 fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
 summary(fitAr)
+ 
