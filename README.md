@@ -17,13 +17,13 @@ My study show that data is normally distributed and the p-value is significant.
 I also try different method to upload huge data in R studio and work with it.
 Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data 
 
-library (data.table)
-install.packages("devtools")
-library(pryr)  
-mem_used()
-mem_change(x <- 1:2000e6)  ##chenging memory.size
+    library (data.table)
+    install.packages("devtools")
+    library(pryr)  
+    mem_used()
+    mem_change(x <- 1:2000e6)  ##chenging memory.size
 
-##Loading big data set package Sqldf much faster 
+     ##Loading big data set package Sqldf much faster 
 require(sqldf)
 f <- file("data.csv")
 system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
