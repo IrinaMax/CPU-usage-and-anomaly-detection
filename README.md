@@ -23,13 +23,13 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     mem_used()
     mem_change(x <- 1:2000e6)  ##chenging memory.size
 
-     ##Loading big data set package Sqldf much faster 
+  ##Loading big data set package Sqldf much faster 
     require(sqldf)
     f <- file("data.csv")
     system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
                           file.format =list(header = T, row.names = F)))
-    #user  system elapsed 
-     #229.614  10.047 292.657 
+  #user  system elapsed 
+   #229.614  10.047 292.657 
 
      print(object.size(SQLf), units="Mb")  ## to see the size of the data
      require(data.table)
@@ -45,23 +45,23 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     #61176885 1537577311 0.5435166
     #61176886 1537577312 0.5217177
     tail(h)
-    #               time cpu_usage
+   #               time cpu_usage
    #61176883 1537577309 0.6574899
    #61176884 1537577310 0.3474769
    #61176885 1537577311 0.5435166
    #61176886 1537577312 0.5217177
    #61176887 1537577313 0.4229254
-    dim(h) 
-#[1] 61176887        2    we can see the observation : its 61176887 rows and I guess it  is by second
-## To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
-str(h)
-summary(h)
-hist (h$cpu_usage) 
+      dim(h) 
+ #[1] 61176887        2    we can see the observation : its 61176887 rows and I guess it  is by second
+ # To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
+    str(h)
+    summary(h)
+    hist (h$cpu_usage) 
 ## look hist_1_cpuUsage
 
-hist (h1$time)
+     hist (h1$time)
 ## look hist_2_cpuYime
-tail(h)
+   tail(h)
 
 ## normalising data 
 sd(h$cpu_usage)  
