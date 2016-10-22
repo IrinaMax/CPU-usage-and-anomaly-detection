@@ -4,7 +4,7 @@ It is my work with the 2 GB data set of cpu usase
 title: "AnomalyDetection of cpu usage"
 author: "Irina Max"
 date: October14 2016
-output: html_document
+     output: html_document
 ---
 
 The goal of this script is to get an overview of the characteristics and usage of the cpu
