@@ -1,5 +1,5 @@
 # CPU-usage-and-anomaly-detection
-It is my work with the 2 GB data set of cpu usase
+It is my work with the 2 GB data set of cpu usage
 ---
 title: "AnomalyDetection of cpu usage"
 author: "Irina Max"
