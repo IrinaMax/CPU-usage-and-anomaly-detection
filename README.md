@@ -38,34 +38,32 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     head(SQLf,10)
     h <- as.data.frame(SQLf)
     head(h,5)  
-             time cpu_usage ##61176882 1537577308 0.4064532
-                        61176883 1537577309 0.6574899   
-                         61176884 1537577310 0.3474769
-                         61176885 1537577311 0.5435166
-                          61176886 1537577312 0.5217177
-                          61176882 1537577308 0.4064532
-61176883 1537577309 0.6574899   
-61176884 1537577310 0.3474769
-61176885 1537577311 0.5435166
-61176886 1537577312 0.5217177
-    tail(h)
-             time cpu_usage
-   ##61176883 1537577309 0.6574899
-   ##61176884 1537577310 0.3474769
-   ##61176885 1537577311 0.5435166
-   ##61176886 1537577312 0.5217177
-   ##61176887 1537577313 0.4229254
-      dim(h) 
- #[1] 61176887        2    we can see the observation : its 61176887 rows and I guess it  is by second
- # To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
-    str(h)
-    summary(h)
-    hist (h$cpu_usage) 
- # look  plot hist_1_cpuUsage
+                               time cpu_usage ##
+                61176882 1537577308 0.4064532
+                61176883 1537577309 0.6574899   
+                61176884 1537577310 0.3474769
+                61176885 1537577311 0.5435166
+                61176886 1537577312 0.5217177
+                          
+      tail(h)
+                              time cpu_usage
+              ##61176883 1537577309 0.6574899
+              ##61176884 1537577310 0.3474769
+              ##61176885 1537577311 0.5435166
+              ##61176886 1537577312 0.5217177
+              ##61176887 1537577313 0.4229254
+        dim(h) 
+         #[1] 61176887        2    
+we can see the observation : its 61176887 rows and I guess it  is by second
+To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
+         str(h)
+         summary(h)
+         hist (h$cpu_usage) 
+look  plot hist_1_cpuUsage
 
-     hist (h1$time)
- # look  plot hist_2_cpuYime
-     tail(h)
+         hist (h1$time)
+look  plot hist_2_cpuYime
+         tail(h)
 
  ## normalising data 
     sd(h$cpu_usage)  
