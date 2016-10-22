@@ -63,8 +63,10 @@ look  plot hist_1_cpuUsage
 
          hist (h1$time)
 look  plot hist_2_cpuYime
+
          tail(h)
 normalising data 
+
          sd(h$cpu_usage)  
               [1] 0.1004229  standart deviation
          mean (h$cpu_usage) 
