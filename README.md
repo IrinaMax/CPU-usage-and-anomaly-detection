@@ -6,14 +6,14 @@ author: "Irina Max"
 date: October14 2016
      
 ---
-output: html_document
+Here just exploratory of the data set.
 The goal of this script is to get an overview of the characteristics and usage of the cpu
 in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used
 couple technique to download it and try to work with it.
 
 Visualisation possible to implement just with chunk of the random of the data, which absolutely normally to use to describe the data behavior.
 
-My study show that data is normally distributed and the p-value is significant.
+My study show that data is not normally distributed and the p-value is significant.
 I also try different method to upload huge data in R studio and work with it.
 Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data 
 
@@ -78,3 +78,15 @@ normalising data
            -5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
+Data is not normally distributed and the p-value is significant.
+           t.test(h$cpu_usage )
+                     One Sample t-test
+
+               data:  h$cpu_usage
+               t = 38965, df = 61177000, p-value < 2.2e-16
+               alternative hypothesis: true mean is not equal to 0
+               95 percent confidence interval:
+               0.5002575 0.5003079
+               sample estimates:
+               mean of x 
+               0.5002827 
