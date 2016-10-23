@@ -6,7 +6,7 @@ author: "Irina Max"
 date: October14 2016
      
 ---
-Here just exploratory of the data set.
+Here is exploratory of the data set and couple of pages different models of my dinamic option and also atomatic anomaly detection in tame series data.
 The goal of this script is to get an overview of the characteristics and usage of the cpu
 in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used
 couple technique to download it and try to work with it.
@@ -91,7 +91,8 @@ Data is not normally distributed and the p-value is significant.
                sample estimates:
                mean of x 
                0.5002827 
-it is just begining, go look othe pages https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
+It is just begining, go look othe pages 
+https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20detection
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/MCLUST%20clustering%20analysis%20and%20visualisation
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/More%20exporatory%20and%20anomaly%20detection
