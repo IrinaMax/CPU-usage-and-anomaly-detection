@@ -6,16 +6,10 @@ author: "Irina Max"
 date: October14 2016
      
 ---
-Here is exploratory of the data set and couple of pages different models of my dinamic option and also atomatic anomaly detection in tame series data.
-The goal of this script is to get an overview of the characteristics and usage of the cpu
-in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used
-couple technique to download it and try to work with it.
-
+Here is exploratory of the data set and couple of pages different models of my dynamic option and also automatic anomaly detection in time series data. The goal of this script is to get an overview of the characteristics and usage of the cpu in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used couple technique to download it and try to work with it.
 Visualisation possible to implement just with chunk of the random of the data, which absolutely normally to use to describe the data behavior.
-
-My study show that data is not normally distributed and the p-value is significant.
-I also try different method to upload huge data in R studio and work with it.
-Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data 
+My study show that data is not normally distributed and the p-value is significant. I also try different method to upload huge data in R studio and work with it. 
+Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data
 
     library (data.table)
     install.packages("devtools")
