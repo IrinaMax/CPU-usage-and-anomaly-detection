@@ -39,11 +39,13 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     h <- as.data.frame(SQLf)
     head(h,5)  
                                time cpu_usage ##
-                61176882 1537577308 0.4064532
-                61176883 1537577309 0.6574899   
-                61176884 1537577310 0.3474769
-                61176885 1537577311 0.5435166
-                61176886 1537577312 0.5217177
+                        time cpu_usage
+                 1  1476400437 0.4131848
+                 2  1476400438 0.4347889
+                 3  1476400439 0.5760822
+                 4  1476400440 0.5026307
+                 5  1476400441 0.5440287
+                
                           
       tail(h)
                               time cpu_usage
