@@ -1,6 +1,6 @@
-##This is detection Anomaly with Package "AnomalyDetection" wich show very beautiful plot,
-but visualisation not possible with data 61 M and of cause I wanted to show the idea of the this poweful package,
-so implementation base on the part of day, data cpu usage, wich still very huge but show pretty good result.
+##This is detection Anomaly with Package "AnomalyDetection" which show very beautiful plot,
+##but visualisation not possible with data 61 M and of cause I wanted to show the idea of the this powerful package,
+##so implementation base on the part of day, data cpu usage, which still very huge but show pretty good result.
 
 install.packages("devtools")
 devtools::install_github("twitter/AnomalyDetection")
