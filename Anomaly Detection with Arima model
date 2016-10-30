@@ -1,8 +1,11 @@
-Arima model show the stationaly and differencis in the data.
+
+
+Arima model show the stationary and differences in the data.
+
 A stationary time series is one whose properties do not depend on the time at which the series is observed.
 Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
-Stationary time series will have no predictable patterns in the long-term. 
-Forvisualisation process I took the sample scope the CPU, with will show 
+Stationary time series will have no predictable patterns in the long-term.
+For Visualisation process I took the sample scope the CPU, with will show
 
 >library(pryr)  
 >mem_used()
