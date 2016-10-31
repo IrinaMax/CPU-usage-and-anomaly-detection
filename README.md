@@ -26,17 +26,19 @@ Loading big data set package Sqldf much faster
         system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
                           file.format =list(header = T, row.names = F)))
 user  system elapsed 
-   #229.614  10.047 292.657 
+   #            229.614  10.047 292.657 
 
      print(object.size(SQLf), units="Mb")  ## to see the size of the data
+     
+The data size is 1.97G, but after I used SQL context size of the data distributed in SQL 700.1 Mb    
      require(data.table)
      system.time(DT <- fread("data.csv"))  ## how long time will be read fread function
 
     head(SQLf,10)
     h <- as.data.frame(SQLf)
     head(h,5)  
-                               time cpu_usage ##
-                        time cpu_usage
+                              
+   ##                     time cpu_usage
                  1  1476400437 0.4131848
                  2  1476400438 0.4347889
                  3  1476400439 0.5760822
@@ -52,11 +54,19 @@ user  system elapsed
               ##61176886 1537577312 0.5217177
               ##61176887 1537577313 0.4229254
         dim(h) 
-         #[1] 61176887        2    
-we can see the observation : its 61176887 rows and I guess it  is by second
+       [1] 61176887        2    
+We can see the observation : its 61176887 rows and 2 colomns and I guess it  is by second
 To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
          str(h)
          summary(h)
+                 time             cpu_usage      
+           Min.   :1.476e+09   Min.   :-0.0377  
+           1st Qu.:1.492e+09   1st Qu.: 0.4326  
+           Median :1.507e+09   Median : 0.5001  
+           Mean   :1.507e+09   Mean   : 0.5003  
+           3rd Qu.:1.522e+09   3rd Qu.: 0.5677  
+           Max.   :1.538e+09   Max.   : 1.0347  
+           
          hist (h$cpu_usage) 
 look  plot hist_1_cpuUsage
 
