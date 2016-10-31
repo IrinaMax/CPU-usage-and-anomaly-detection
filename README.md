@@ -72,9 +72,10 @@ Let's look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almo
            Mean   :1.507e+09   Mean   : 0.5003  
            3rd Qu.:1.522e+09   3rd Qu.: 0.5677  
            Max.   :1.538e+09   Max.   : 1.0347  
+Summary show the Min CPU used for 3% and Max is more then 103% with already said it is anomaly. Median and Mean is almost the same value.
            
          hist (h$cpu_usage) 
-look  plot hist_1_cpuUsage
+look  plot hist_1_cpuUsage with show anomaly will stay on the sides where usage was less then 10% or more then 90%
 
          hist (h1$time)
 look  plot hist_2_cpuYime
@@ -108,8 +109,69 @@ Data is not normally distributed  and I reject Zero Hypothesis. The p-value is s
                0.5002827 
                
 The avarage usage of the CPU is 50% and its resonable value.
+Model1 base on the dinamic quantiles and outliers usually has proportion < .15
+## either combine
 
-It is just begining, go look othe pages 
+I am going to find anomalys as outliers by counting quantiles and dinamicly find location of them 
+and play with time series packege
+
+        s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+        s1 <- ts(h, start = 1476400427, end= 1537577313, frequency = 1 )
+        # Time Series:
+        # Start = 1476400427 
+        # End = 1537577313 
+        # Frequency = 1 
+
+        s1
+        qu <- quantile(h[,2])
+        qu
+         ## 0%         25%         50%         75%        100% 
+         ## -0.03770475  0.43259519  0.50010228  0.56767500  1.03465204 
+        dim(qu)
+        qu <- as.data.frame(qu)
+        q1 = qu[2,1]
+        q2 = qu[3,1]
+        q3 = qu[4,1]
+        iqr <- q3-q1
+        w1 <-q1-1.5*iqr
+        w2 <- q3 + 1.5*iqr
+        # then combine all together 
+        o.h <- subset(h, h$cpu_usage < q1-1.5*iqr)   
+        o2.h <- subset(h, h$cpu_usage > q3 + 1.5*iqr)
+        outliers_h <- rbind(o.h, o2.h) 
+        head(outliers_h)
+        dim(outliers_h)
+        ##  [1] 466558      2
+        summary(outliers_h)  ##  we have 466558 anomaly detection
+        #time             cpu_usage      
+        #Min.   :1.476e+09   Min.   :-0.0377  
+        #1st Qu.:1.492e+09   1st Qu.: 0.2106  
+        #Median :1.507e+09   Median : 0.7736  
+        #Mean   :1.507e+09   Mean   : 0.5297  
+        #3rd Qu.:1.522e+09   3rd Qu.: 0.7989  
+        #Max.   :1.538e+09   Max.   : 1.0347 
+
+I have 466558 anomaly detection in this data set.
+
+I am going to show visualisation on the tiny sample
+        h1 <- h[sample(nrow(h), 100000), ]  ## I pick random
+        head(h1)
+        o.h1 <- subset(h1, h1$cpu_usage < 0.15)  ##  all outliers on the top
+        o2.h1 <- subset(h1, h1$cpu_usage > 0.85)  ##  all outliers on the buttom
+        head(o.h1)
+        o.h1
+        dim(o.h1)
+        plot (o.h1)    ## plot will take a lot of memory so better not plot it
+        head(o2.h1)
+        plot (o2.h1)  ## plot top of the outliers
+        dim(o2.h1)
+        outliers <- rbind(o.h1, o2.h1)
+        dim(outliers)
+        plot (outliers)
+
+It is just begining, and ther is a lot of built in formulas in R and even MOA where I can show stream data but 
+you need to instal MOA-GUI visualisation toll for real time stream and WEKA on your computer to make my code on R work.
+Please go look other pages  with othe models of Anomaly Detection with amazing plots
 https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20detection
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/MCLUST%20clustering%20analysis%20and%20visualisation
