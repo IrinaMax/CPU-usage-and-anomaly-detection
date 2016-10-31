@@ -55,10 +55,15 @@ The data size is 1.97G, but after I used SQL context size of the data distribute
               ##61176887 1537577313 0.4229254
         dim(h) 
        [1] 61176887        2    
-We can see the observation : its 61176887 rows and 2 colomns and I guess it  is by second
-To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
+We can see the observation : its 61176887 rows and 2 colomns and I guess it time by  every second.
+Let's look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data was taken by every second od CPU usage.  
          
-         str(h)
+         'data.frame':	61176887 obs. of  2 variables:
+         $ time     : int  1476400427 1476400428 1476400429 1476400430 1476400431 1476400432 1476400433 1476400434 1476400435 1476400436 ...
+         $ cpu_usage: num  0.748 0.424 0.421 0.334 0.286 ...str(h)
+         'data.frame':	61176887 obs. of  2 variables:
+         $ time     : int  1476400427 1476400428 1476400429 1476400430 1476400431 1476400432 1476400433 1476400434 1476400435 1476400436 ...
+         $ cpu_usage: num  0.748 0.424 0.421 0.334 0.286 ...
          summary(h)
                  time             cpu_usage      
            Min.   :1.476e+09   Min.   :-0.0377  
