@@ -19,12 +19,12 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     ##chenging memory.size to 8 GB
     mem_change(x <- 1:2000e6) 
 
-  ##Loading big data set package Sqldf much faster 
+Loading big data set package Sqldf much faster 
     require(sqldf)
     f <- file("data.csv")
     system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
                           file.format =list(header = T, row.names = F)))
-  #user  system elapsed 
+user  system elapsed 
    #229.614  10.047 292.657 
 
      print(object.size(SQLf), units="Mb")  ## to see the size of the data
