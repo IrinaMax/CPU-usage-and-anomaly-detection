@@ -57,6 +57,7 @@ The data size is 1.97G, but after I used SQL context size of the data distribute
        [1] 61176887        2    
 We can see the observation : its 61176887 rows and 2 colomns and I guess it  is by second
 To look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data  
+         
          str(h)
          summary(h)
                  time             cpu_usage      
