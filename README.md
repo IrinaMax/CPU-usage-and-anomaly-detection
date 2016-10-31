@@ -110,7 +110,6 @@ Data is not normally distributed  and I reject Zero Hypothesis. The p-value is s
                
 The avarage usage of the CPU is 50% and its resonable value.
 Model1 base on the dinamic quantiles and outliers usually has proportion < .15
-## either combine
 
 I am going to find anomalys as outliers by counting quantiles and dinamicly find location of them 
 and play with time series packege
