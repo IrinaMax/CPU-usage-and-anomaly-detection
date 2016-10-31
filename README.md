@@ -14,8 +14,10 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     library (data.table)
     install.packages("devtools")
     library(pryr)  
+    ## always checking out the memory, may be its already extended... but if not you can make it bigger.
     mem_used()
-    mem_change(x <- 1:2000e6)  ##chenging memory.size
+    ##chenging memory.size to 8 GB
+    mem_change(x <- 1:2000e6) 
 
   ##Loading big data set package Sqldf much faster 
     require(sqldf)
@@ -74,7 +76,7 @@ normalising data
            -5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
-Data is not normally distributed and the p-value is significant.
+Data is not normally distributed  and I reject Zero Hypothesis. The p-value is significantand it's Alternative Hypothesis.
           
         t.test(h$cpu_usage )
                      One Sample t-test
@@ -87,6 +89,9 @@ Data is not normally distributed and the p-value is significant.
                sample estimates:
                mean of x 
                0.5002827 
+               
+The avarage usage of the CPU is 50% and its resonable value.
+
 It is just begining, go look othe pages 
 https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20detection
