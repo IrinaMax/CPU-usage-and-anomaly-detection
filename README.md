@@ -20,9 +20,9 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     mem_change(x <- 1:2000e6) 
 
 Loading big data set package Sqldf much faster 
-      require(sqldf)
-      f <- file("data.csv")
-      system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
+        require(sqldf)
+        f <- file("data.csv")
+        system.time(SQLf <- sqldf("select * from f", dbname = tempfile(), 
                           file.format =list(header = T, row.names = F)))
 user  system elapsed 
    #229.614  10.047 292.657 
