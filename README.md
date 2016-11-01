@@ -57,7 +57,7 @@ The data size is 1.97G, but after I used SQL context size of the data distribute
         dim(h) 
        [1] 61176887        2    
 We can see the observation : its 61176887 rows and 2 colomns and I guess it time by  every second.
-Let's look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data was taken by every second od CPU usage.  
+Let's look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almost 2 year data was taken by every second of CPU usage.  
          
          'data.frame':	61176887 obs. of  2 variables:
          $ time     : int  1476400427 1476400428 1476400429 1476400430 1476400431 1476400432 1476400433 1476400434 1476400435 1476400436 ...
@@ -175,7 +175,7 @@ I am going to show visualisation on the sample because the dataset it too big to
         plot (o.h1)    
         head(o2.h1)
         plot (o2.h1)  ## plot top of the outliers
-        ![rplot_out_down_3](https://cloud.githubusercontent.com/assets/16123495/19880410/480797fe-9fba-11e6-85b2-0253d416cc5a.png)
+![rplot_out_down_3](https://cloud.githubusercontent.com/assets/16123495/19880410/480797fe-9fba-11e6-85b2-0253d416cc5a.png)
 
         
         dim(o2.h1)
