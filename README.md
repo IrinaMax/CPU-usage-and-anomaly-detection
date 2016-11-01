@@ -91,12 +91,16 @@ look  plot hist_2_cputime, its pretty consistent and never been lost any second,
 normalising data 
 
          sd(h$cpu_usage)  
-              [1] 0.1004229  standart deviation
+              [1] 0.1004229  
+standart deviation in CPU usage 0.1004229              
+              
          mean (h$cpu_usage) 
-              [1] 0.5002827     mean is 50% and it is obviouse
+              [1] 0.5002827     
+mean is 50% and it is obviouse
+           
            z_score_h <- (h$cpu_usage - mean(h$cpu_usage))/sd(h$cpu_usage)
            head(z_score_h)
-            summary(z_score_h)
+           summary(z_score_h)
                Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
            -5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
 
@@ -159,7 +163,8 @@ and play with time series packege
 
 I have 466558 anomaly detection in this data set.
 
-I am going to show visualisation on the tiny sample
+I am going to show visualisation on the sample because the dataset it too big to implement all graph.
+
         h1 <- h[sample(nrow(h), 100000), ]  ## I pick random
         head(h1)
         o.h1 <- subset(h1, h1$cpu_usage < 0.15)  ##  all outliers on the top
@@ -167,7 +172,7 @@ I am going to show visualisation on the tiny sample
         head(o.h1)
         o.h1
         dim(o.h1)
-        plot (o.h1)    ## plot will take a lot of memory so better not plot it
+        plot (o.h1)    
         head(o2.h1)
         plot (o2.h1)  ## plot top of the outliers
         ![rplot_out_down_3](https://cloud.githubusercontent.com/assets/16123495/19880410/480797fe-9fba-11e6-85b2-0253d416cc5a.png)
