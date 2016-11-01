@@ -1,5 +1,5 @@
 # CPU-usage-and-anomaly-detection
-![ScreenShot](https://raw.github.com/{username}/{repository}/{branch}/{path})
+![ScreenShot]https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Plot_anomal_CPU_usage.pdf
 It is my work with the 2 GB data set of cpu usage
 ---
 title: "AnomalyDetection of cpu usage"
