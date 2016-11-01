@@ -1,5 +1,5 @@
 # CPU-usage-and-anomaly-detection
-![a_cpu_usage](https://cloud.githubusercontent.com/assets/16123495/19879583/83c8caa0-9fb1-11e6-9c3c-8e92593c9a7e.png)
+![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19879905/18d7fd52-9fb5-11e6-8b74-aadac1c68671.png)
 It is my work with the 2 GB data set of cpu usage
 ---
 title: "AnomalyDetection of cpu usage"
@@ -83,7 +83,9 @@ Summary show the Min CPU used for 3% and Max is more then 103% with already said
 look  plot hist_1_cpuUsage with show anomaly will stay on the sides where usage was less then 10% or more then 90%
 
          hist (h1$time)
-look  plot hist_2_cpuYime
+   ![hist_2_cputime](https://cloud.githubusercontent.com/assets/16123495/19879933/777e930c-9fb5-11e6-9a9c-77b777db2488.png)
+     
+look  plot hist_2_cputime, its pretty consistent and never been lost any second, good dencity.
 
          tail(h)
 normalising data 
@@ -168,12 +170,17 @@ I am going to show visualisation on the tiny sample
         plot (o.h1)    ## plot will take a lot of memory so better not plot it
         head(o2.h1)
         plot (o2.h1)  ## plot top of the outliers
+        ![rplot_out_down_3](https://cloud.githubusercontent.com/assets/16123495/19880410/480797fe-9fba-11e6-85b2-0253d416cc5a.png)
+
+        
         dim(o2.h1)
         outliers <- rbind(o.h1, o2.h1)
         dim(outliers)
         plot (outliers)
+        
+![rplot_dinamicly_found_outliers3](https://cloud.githubusercontent.com/assets/16123495/19880459/93ead672-9fba-11e6-9c77-0ac68a46ae3d.png)
 
-It is just begining, and ther is a lot of built in formulas in R and even MOA where I can show stream data but 
+It is just begining, and there is a lot of interested packges and formulas in R and even MOA where I can show stream data but 
 you need to instal MOA-GUI visualisation toll for real time stream and WEKA on your computer to make my code on R work.
 Please go look other pages  with othe models of Anomaly Detection with amazing plots
 https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
