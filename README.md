@@ -76,7 +76,7 @@ Let's look how long data was taken  61176887/60/60/24/365 =1.9 year so, its almo
 Summary show the Min CPU used for 3% and Max is more then 103% with already said it is anomaly. Median and Mean is almost the same value.
            
          hist (h$cpu_usage) 
-![ScreenShot](https://raw.github.com/{username}/{repository}/{branch}/{path})
+![ScreenShot](https://raw.github.com/{IrinaMax}/{CPU-usage-and-anomaly-detection}/{hist_1_cpuUsage.png})
 look  plot hist_1_cpuUsage with show anomaly will stay on the sides where usage was less then 10% or more then 90%
 
          hist (h1$time)
