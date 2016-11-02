@@ -7,7 +7,7 @@ author: "Irina Max"
 date: October14 2016
      
 ---
-Here is exploratory of the data set and couple of pages different models of my dynamic option and also automatic anomaly detection in time series data. The goal of this script is to get an overview of the characteristics and usage of the cpu in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used couple technique to download it and try to work with it.
+I begin exploratory of the data set and couple of pages different models of my dynamic option and also automatic anomaly detection in time series data. The goal of this script is to get an overview of the characteristics and usage of the cpu in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used couple technique to download it and try to work with it.
 Visualisation possible to implement just with chunk of the random of the data, which absolutely normally to use to describe the data behavior.
 My study show that data is not normally distributed and the p-value is significant. I also try different method to upload huge data in R studio and work with it. 
 Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data
@@ -185,7 +185,72 @@ I am going to show visualisation on the sample because the dataset it too big to
         
 ![rplot_dinamicly_found_outliers3](https://cloud.githubusercontent.com/assets/16123495/19880459/93ead672-9fba-11e6-9c77-0ac68a46ae3d.png)
 
-It is just begining, and there is a lot of interested packges and formulas in R and even MOA where I can show stream data but 
+R have a lot of packages and one show the beautiful clistering where you can see your data behavior 
+and aslo where and how data is distributed.
+       
+       library (data.table)
+        install.packages("devtools")
+        library(pryr)  
+        mem_used()
+        mem_change(x <- 1:2000e6)  
+chenging memory.size only if you need to 
+
+        h1 <- read.csv("data.csv", nrow = 10000)
+        #head(select(h1, starts_with(h1$time[[1:3]][1])))
+        ## Model 2 with  MCLUST packege
+        library("tsoutliers")
+        require(tsoutliers) 
+        library(TTR)
+        library(tseries)
+
+MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
+        library(mclust)
+        fit1 <- Mclust(h1,5)
+        plot(fit1)     ## look the beautiful colerfull plots MCLUST
+             Model-based clustering plots: 
+             1: BIC
+             2: classification
+![mclust_classification](https://cloud.githubusercontent.com/assets/16123495/19914683/c71a0284-a069-11e6-8e14-f50ad7dc398a.png)
+             3: uncertainty
+![mclust_uncertainty](https://cloud.githubusercontent.com/assets/16123495/19914692/d3e70a0c-a069-11e6-840e-1c85047506bd.png)           
+             4: density
+![mclust_dencitylog](https://cloud.githubusercontent.com/assets/16123495/19914685/cb64cc48-a069-11e6-92e8-deeee8ff5fcc.png)             
+         summary(fit1)
+            ----------------------------------------------------
+            Gaussian finite mixture model fitted by EM algorithm 
+            ----------------------------------------------------
+
+            Mclust VVI (diagonal, varying volume and shape) model with 5 components:
+
+             log.likelihood     n df       BIC       ICL
+             -83598.85 10000 24 -167418.7 -171798.5
+
+              Clustering table:
+                         1    2    3    4    5 
+                       1209 2465 1981 2994 1351 
+
+
+         fit2 <- mclustBIC(1,8)  ##  we cluster it with 8 clusters or any numbers
+         summary(fit2)
+         plot(fit2)               # plot results MCLUST_uncirtainty
+         summary(fit2) # display the best model
+
+                 Best BIC values:
+                       VVI,8         VVE,8         VVV,8
+              BIC      -167303 -1.673116e+05 -167368.91743
+              BIC diff       0 -8.617787e+00     -65.92255
+Centroid Plot against 1st 2 discriminant functions
+         library(fpc)
+         cluster.stats(0.01, fit$cluster, fit1$cluster)
+
+append cluster assignment
+         mydata <- data.frame(h1, fit$cluster)
+         mydata
+         plot(mydata)  ## you can look plot of Cluster assignment
+![cluster_assignment](https://cloud.githubusercontent.com/assets/16123495/19914698/e0e8362c-a069-11e6-914f-1c8ec40bec80.png)
+         
+
+There is a lot of interested packges and formulas in R and even MOA where I can show stream data but 
 you need to instal MOA-GUI visualisation toll for real time stream and WEKA on your computer to make my code on R work.
 Please go look other pages  with othe models of Anomaly Detection with amazing plots
 https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
