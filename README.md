@@ -216,6 +216,7 @@ MCLUST show very beautiful Clustering Model where you can see the outliers base 
              4: density
 ![mclust_dencitylog](https://cloud.githubusercontent.com/assets/16123495/19914685/cb64cc48-a069-11e6-92e8-deeee8ff5fcc.png)             
          summary(fit1)
+         
                   ----------------------------------------------------
                   Gaussian finite mixture model fitted by EM algorithm 
                    ----------------------------------------------------
@@ -251,6 +252,56 @@ append cluster assignment where we can see a lot od outliers inevery cluster, wi
            plot(mydata)  ## you can look plot of Cluster assignment
 ![cluster_assignment](https://cloud.githubusercontent.com/assets/16123495/19914698/e0e8362c-a069-11e6-914f-1c8ec40bec80.png)
 
+This is detection Anomaly with Package "AnomalyDetection" which show very beautiful plot,
+but visualisation not possible with data 61 M and of cause I wanted to show the idea of the this powerful package,
+so implementation base on the part of day, data cpu usage, which still very huge but show pretty good result.
+
+        install.packages("devtools")
+        devtools::install_github("twitter/AnomalyDetection")
+        library("AnomalyDetection", lib.loc="~/Library/R/3.3/library")
+        help(AnomalyDetectionTs)  ##  its good to look at help page where you ca discover a lot about the model
+        help(AnomalyDetectionVec)
+        library (data.table)
+The expected data format is two columns – one containing a time stamp and the other a count. e.g. using the ‘raw_data’ data frame that is in scope when you add the library:
+
+        library(dplyr)
+        h1 <- read.csv("data.csv", nrow = 270000)
+        h1 %>% head()
+        dim(h1)
+
+automatic threshold Filter all negative anomalies and those anomalies whose magnitude is smaller 
+than one of the specified thresholds which include: the median of the daily max values 
+(med_max), the 95th percentile of the daily max values (p95), and the 99th percentile of 
+the daily max values (p99).
+
+        anom1 <- AnomalyDetectionTs(h1, period=60, plot=TRUE)
+        res1$plot    ##  Plot_anomal_CPU_usage.pdf
+![rplot_anom_cpu_usage](https://cloud.githubusercontent.com/assets/16123495/19914965/526de330-a06c-11e6-8e5e-7ee4d1ee3525.png)
+
+       data 
+       anomCPU3600 <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
+       summary(anomCPU3600)
+
+look the Rplot_anom_cpu_3600.png , it was the anomaly during one day
+![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19914997/882cd198-a06c-11e6-8335-6966c34385e9.png)
+             #Length Class      Mode
+             #anoms 2      data.frame list
+             #plot  9      gg         list
+
+        anomCPU24_hour$anoms   ##  show all numbers and time of anomaly
+        dim(anomCPU24_hour$anoms) 
+        #[1] 141   2      
+It was 142 anomaly during 24 hours time
+
+          res = AnomalyDetectionTs(h1, 
+                         max_anoms=0.02, 
+                         direction='both', 
+                         plot=TRUE)
+          AnomalyDetectionTs(h1, max_anom =0.1, direction = "pos", alpha = 0.05, num_obs_per_period = 360, plot = T)
+
+          install.packages("devtools")
+          devtools::install_github("twitter/BreakoutDetection")
+          library(BreakoutDetection)
 
          
 
