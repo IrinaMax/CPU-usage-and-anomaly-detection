@@ -216,14 +216,14 @@ MCLUST show very beautiful Clustering Model where you can see the outliers base 
              4: density
 ![mclust_dencitylog](https://cloud.githubusercontent.com/assets/16123495/19914685/cb64cc48-a069-11e6-92e8-deeee8ff5fcc.png)             
          summary(fit1)
-            ----------------------------------------------------
-            Gaussian finite mixture model fitted by EM algorithm 
-            ----------------------------------------------------
+                  ----------------------------------------------------
+                  Gaussian finite mixture model fitted by EM algorithm 
+                   ----------------------------------------------------
 
-            Mclust VVI (diagonal, varying volume and shape) model with 5 components:
+               Mclust VVI (diagonal, varying volume and shape) model with 5 components:
 
-             log.likelihood     n df       BIC       ICL
-             -83598.85 10000 24 -167418.7 -171798.5
+              log.likelihood     n df       BIC       ICL
+                     -83598.85 10000 24 -167418.7 -171798.5
 
               Clustering table:
                          1    2    3    4    5 
@@ -240,14 +240,18 @@ MCLUST show very beautiful Clustering Model where you can see the outliers base 
               BIC      -167303 -1.673116e+05 -167368.91743
               BIC diff       0 -8.617787e+00     -65.92255
 Centroid Plot against 1st 2 discriminant functions
-         library(fpc)
-         cluster.stats(0.01, fit$cluster, fit1$cluster)
+           
+           library(fpc)
+           cluster.stats(0.01, fit$cluster, fit1$cluster)
 
-append cluster assignment
-         mydata <- data.frame(h1, fit$cluster)
-         mydata
-         plot(mydata)  ## you can look plot of Cluster assignment
+append cluster assignment where we can see a lot od outliers inevery cluster, with said about anomaly in dataset
+           
+           mydata <- data.frame(h1, fit$cluster)
+           mydata
+           plot(mydata)  ## you can look plot of Cluster assignment
 ![cluster_assignment](https://cloud.githubusercontent.com/assets/16123495/19914698/e0e8362c-a069-11e6-914f-1c8ec40bec80.png)
+
+
          
 
 There is a lot of interested packges and formulas in R and even MOA where I can show stream data but 
