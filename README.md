@@ -269,7 +269,7 @@ The expected data format is two columns – one containing a time stamp and the 
         h1 %>% head()
         dim(h1)
 
-automatic threshold Filter all negative anomalies and those anomalies whose magnitude is smaller 
+automatic threshold filtering all negative anomalies and those anomalies whose magnitude is smaller 
 than one of the specified thresholds which include: the median of the daily max values 
 (med_max), the 95th percentile of the daily max values (p95), and the 99th percentile of 
 the daily max values (p99).
