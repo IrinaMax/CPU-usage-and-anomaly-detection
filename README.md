@@ -284,7 +284,7 @@ the daily max values (p99).
        anomCPU3600 <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
        summary(anomCPU3600)
 
-look the Rplot_anom_cpu_3600.png , it was the anomaly during one day
+The Rplot_anom_cpu_3600.png , shows the anomaly during few hours
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19914997/882cd198-a06c-11e6-8335-6966c34385e9.png)
              #Length Class      Mode
              #anoms 2      data.frame list
@@ -304,6 +304,278 @@ It was 142 anomaly during 24 hours time
           install.packages("devtools")
           devtools::install_github("twitter/BreakoutDetection")
           library(BreakoutDetection)
+          
+Arima model show the stationary and differences in the data.
+
+A stationary time series is one whose properties do not depend on the time at which the series is observed.
+Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
+Stationary time series will have no predictable patterns in the long-term.
+For Visualisation process I took the sample scope the CPU, with will show
+
+       library(pryr)  
+       mem_used()
+       mem_change(x <- 1:1000e6)  ##chenging memory.size
+
+       set.seed(123)
+       h1 <- read.csv("data.csv", nrow = 10000)
+
+Defining variables to easy fit model
+
+       y<- h1$cpu_usage   
+       d.y <- diff(y)   ## defference
+       t <- h1$time
+
+Descriptive statistics and plotting.
+
+       summary(y)
+             Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+           0.1032  0.4326  0.5003  0.5003  0.5671  0.9439 
+
+suitably lagged and iterated differences
+      
+       summary(d.y) 
+              Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+        -0.6418000 -0.0961700 -0.0006152 -0.0000232  0.0949100  0.6089000
+       plot(t,y, main = " Arima CPU usage")  ## look plot Arima_CPU_sage
+![a_cpu_usage](https://cloud.githubusercontent.com/assets/16123495/19879583/83c8caa0-9fb1-11e6-9c3c-8e92593c9a7e.png)       
+       plot(d.y, main = " CPU defference")    ##  look plot 
+![a_cpu_diff](https://cloud.githubusercontent.com/assets/16123495/19879584/83cf136a-9fb1-11e6-9586-0bbe6451fd27.png)       
+
+Dickey Fuller test for variable  shows the data is stationary, p value is significant
+and correct statistical decision will be reject Ho hypotesys, so the data actualy  not normaly distributed, 
+we have alternative hypothesis: stationary and explosive.
+ 
+        adf.test(y, alternative = "stationary", k=0)
+	
+              Augmented Dickey-Fuller Test
+
+              data:  y
+              Dickey-Fuller = -100.85, Lag order = 0, p-value = 0.01
+              alternative hypothesis: stationary
+
+              Warning message:
+              In adf.test(y, alternative = "stationary", k = 0) :
+              p-value smaller than printed p-value
+
+         adf.test(y, alternative = "explosive", k=0)
+
+	              Augmented Dickey-Fuller Test
+
+                   data:  y
+                   Dickey-Fuller = -100.85, Lag order = 0, p-value = 0.99
+                   alternative hypothesis: explosive
+
+                   Warning message:
+                   In adf.test(y, alternative = "explosive", k = 0) :
+                   p-value smaller than printed p-value
+
+
+           summary(lm(h1$cpu_usage~h1$time))
+           plot(lm(h1$cpu_usage~h1$time))  
+![rplot_residual_vs_fitted](https://cloud.githubusercontent.com/assets/16123495/19978822/78eb39e6-a1b5-11e6-87c4-ff4da6b0da81.png)           
+If we look at Rplot_residual_vs_fitted and we will see the horizontal red line, with expose stationarity of this data
+               
+               #   Call:
+                #lm(formula = h1$cpu_usage ~ h1$time)
+
+                #Residuals:
+                     Min       1Q   Median       3Q      Max 
+                 -0.39706 -0.06754  0.00013  0.06704  0.44368 
+
+                #Coefficients:
+                                   Estimate Std. Error t value Pr(>|t|)
+                     (Intercept) -2.236e+02  5.120e+02  -0.437    0.662
+                     h1$time      1.518e-07  3.468e-07   0.438    0.662
+
+                #Residual standard error: 0.1001 on 9998 degrees of freedom
+                #Multiple R-squared:  1.917e-05,	Adjusted R-squared:  -8.085e-05 
+                #F-statistic: 0.1916 on 1 and 9998 DF,  p-value: 0.6616
+
+          adf.test(d.y, k=0)   ## we have lag=0 in ADF test
+    	             Augmented Dickey-Fuller Test
+
+                  data:  d.y
+                  Dickey-Fuller = -172.24, Lag order = 0, p-value = 0.01
+                  alternative hypothesis: stationary
+
+                  Warning message:
+                  In adf.test(d.y, k = 0) : p-value smaller than printed p-value
+
+          adf.test(d.y)         ## we have lag = 21 with let us use d.y
+
+	             Augmented Dickey-Fuller Test
+
+                 data:  d.y
+                 Dickey-Fuller = -37.465, Lag order = 21, p-value = 0.01
+                 alternative hypothesis: stationary
+
+                 Warning message:
+                 In adf.test(d.y) : p-value smaller than printed p-value
+ACF ( autocorrelationfunction) and PACF (partion autocorrelation function)
+           
+           acf(y, main= " series of autocorrelation function")   
+We see that the series is stationary enough to do any kind of time series modelling.   (residual ac per units)
+![rplot_acf](https://cloud.githubusercontent.com/assets/16123495/19978752/316cc058-a1b5-11e6-862c-b5aa6b6d5a17.png)           
+           pacf(y, main = "series CPU")                           # correlation is  not significant coz it very short Lags 
+           acf(d.y, mail = "plot series of difference:")          ## stationary
+           pacf(d.y)                                         
+Differences PACF is kinda significant, wich said about short tail the autocorrelations at lags 2 and above are merely due to the 
+propagation of the autocorrelation at lag 1. This is confirmed by the PACF plot:
+![rplot_pacf_cpu](https://cloud.githubusercontent.com/assets/16123495/19978800/668f7c26-a1b5-11e6-9f2d-d1ac68f25646.png)
+![rplot_pacf-diff_cpu](https://cloud.githubusercontent.com/assets/16123495/19978804/6a2f6d78-a1b5-11e6-96f6-0ba6697627dc.png)
+![rplot_pacf](https://cloud.githubusercontent.com/assets/16123495/19978817/74ed9abe-a1b5-11e6-9020-98bbd794cb97.png)
+
+         Arima (1,0,0 PACF)
+         arima(y)
+         arima(y, order = c(1,0,0))
+         arima(y, order = c(2,0,0))
+         arima(y, order = c(0,0,1))
+         arima(y, order = c(1,0,1))
+
+        arima(d.y, order = c(1,0,0))
+        arima(d.y, order = c(0,0,1))
+        arima(d.y, order = c(1,0,1))
+        arima(d.y, order = c(1,0,3))
+
+        boxplot(y~cycle(y), main= "Boxplot of CPU outliers", horizontal = T)    
+The Boxplot actually shows there are outliers here
+![boxplot_h1_3](https://cloud.githubusercontent.com/assets/16123495/19978587/b0219b04-a1b4-11e6-9b5a-341d47f958ce.png)
+        plot(h1, main = "CPU usage")
+        abline(reg=lm(y~time(y)))
+![normalqq](https://cloud.githubusercontent.com/assets/16123495/19978662/ea21cb80-a1b4-11e6-8a57-42b0081d9231.png)
+![outlieqqr](https://cloud.githubusercontent.com/assets/16123495/19978670/ee8daefa-a1b4-11e6-822d-1cd778903a59.png)        
+
+        arima.h1 <- arima.sim(model = list(y,x), n = 120)
+        summary(arima.h1)
+                 Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+              -2.0530 -0.7187 -0.1901 -0.0262  0.5724  3.2410 
+        h1.ts <- ts(h1)
+        h1.ts
+        summary(h1.ts)
+                      time             cpu_usage     
+            Min.   :1.476e+09   Min.   :0.1032  
+            1st Qu.:1.476e+09   1st Qu.:0.4326  
+            Median :1.476e+09   Median :0.5003  
+            Mean   :1.476e+09   Mean   :0.5003  
+            3rd Qu.:1.476e+09   3rd Qu.:0.5671  
+            Max.   :1.476e+09   Max.   :0.9439  
+        plot(h1.ts)  
+
+        ##implementation with all dataset too long time to processsing ....  
+        s <- ts(h1[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+        s1 <- ts(h1, start = 1476400427, end= 1537577313, frequency = 1 )
+        ds <- (DS = decompose(s1))
+        ds
+        s1
+        locate.outliers(s, pars, cval = 3.5, types = c("AO", "LS", "TC"),
+                 delta = 0.7, n.start = 50)
+        ## I an using outliers proportion < .10
+        ##Either combine
+        o.h1 <- subset(h1, h1$cpu_usage < 0.2)    # buttom
+        o2.h1 <- subset(h1, h1$cpu_usage > 0.8)   # top
+        head(o.h1)
+        dim(o.h1)
+        plot (o.h1)
+        head(o2.h1)
+        plot (o2.h1)
+        dim(o2.h1)
+        outliers <- rbind(o.h1, o2.h1)
+        dim(outliers)
+        plot (outliers)
+        ## or we can can be more precice by counting quantiles 
+        s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
+        s1 <- ts(h, start = 1476400427, end= 1537577313, frequency = 1 )
+        ds <- (DS = decompose(s1))
+        s1
+        qu <- quantile(h[,2])
+        ## 0%         25%         50%         75%        100% 
+        ## -0.03770475  0.43259519  0.50010228  0.56767500  1.03465204 
+        dim(qu)
+        qu <- as.data.frame(qu)
+        q1 = qu[2,1]
+        q2 = qu[3,1]
+        q3 = qu[4,1]
+        iqr <- q3-q1
+        w1 <-q3-iqr
+        1 <- q1-1.5*q1 
+        # then combine all together 
+        o.h <- subset(h1, h$cpu_usage < q1-1.5*iqr)
+        o2.h <- subset(h1, h$cpu_usage > q3 + 1.5*iqr)
+        outliers_h <- rbind(o.h, o2.h)
+        summary(outliers_h)
+ 
+ -----
+#Auto outliers with arima
+
+        arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
+        resid <- residuals(arima.fo)
+>       pars <- coefs2poly(arima.fo)
+>       outliers2 <- locate.outliers(resid, pars)
+>       dim(outliers2)
+        [1] 9 4
+>       plot(outliers2, main ="Possible anomaly as outliers with Arima")  ## look the plot 
+![plot_auto_outliers_3](https://cloud.githubusercontent.com/assets/16123495/19978678/f6ec3166-a1b4-11e6-88eb-ff6d9fccae70.png)
+>       summary(outliers2) ##  result auto outliers
+          type        ind          coefhat             tstat        
+         IO :0   Min.   :2222   Min.   :-0.39496   Min.   :-4.4500  
+         AO :5   1st Qu.:4001   1st Qu.:-0.36681   1st Qu.:-3.6791  
+         LS :0   Median :4975   Median : 0.26047   Median : 3.6825  
+         TC :4   Mean   :5392   Mean   : 0.03179   Mean   : 0.5861  
+         SLS:0   3rd Qu.:7365   3rd Qu.: 0.37191   3rd Qu.: 3.9016  
+                 Max.   :8587   Max.   : 0.44149   Max.   : 5.2581  
+	 
+#Prediction with arima
+>        library(fracdiff)
+>        library("forecast", lib.loc="~/Library/R/3.3/library")
+>        fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+>        summary(fit.arima)
+
+         Call:
+          arima(x = y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+
+           Coefficients:
+                       ar1     ma1     sar1     sar2    sma1    sma2
+                   -0.5060  0.8626  -0.9018  -0.0351  -0.463  -0.537
+             s.e.   0.1537     NaN   0.0635   0.0465     NaN     NaN
+
+            sigma^2 estimated as 0.01002:  log likelihood = 8823.43,  aic = -17632.86
+
+            Training set error measures:
+                                  ME      RMSE        MAE       MPE    MAPE      MASE       ACF1
+            Training set 0.0001373833 0.1000703 0.07976704 -4.602609 17.5039 0.7055902 0.00045976
+            Warning message:
+            In sqrt(diag(x$var.coef)) : NaNs produced
+           plot(forecast(fit.arima,h=20), main= "Forecast with Arima Model time series"          
+Look plot Forecast with Arima model
+![rplot_forecast_with_arima3](https://cloud.githubusercontent.com/assets/16123495/19978782/50ab8102-a1b5-11e6-9571-d0bbc5f6ab94.png)
+           fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
+           summary(fitAr)
+           Series:  
+           ARIMA(0,0,0) with non-zero mean 
+
+           Coefficients:
+                    intercept
+                       0.5003
+              s.e.     0.0010
+
+          sigma^2 estimated as 0.01002:  log likelihood=8826.98
+          AIC=-17649.97   AICc=-17649.96   BIC=-17635.55
+
+          Training set error measures:
+                                 ME      RMSE        MAE       MPE     MAPE      MASE        ACF1
+          Training set 9.020453e-18 0.1000949 0.07976242 -4.635183 17.50735 0.7055494 -0.00829783
+ 
+ ******************************************
+         plot(forecast(fitAr))    # Plot with auto arima
+![poss_anomaly_arima](https://cloud.githubusercontent.com/assets/16123495/19978707/0e2ce55a-a1b5-11e6-92d7-92b7bb9aaea5.png)
+         pars <- coefs2poly(fitAr)
+         resid <- residuals(fitAr)
+         n <- length(resid)
+ 
+ 
+         sigma <- 1.483 * quantile(abs(resid - quantile(resid, probs = 0.5)), probs = 0.5)
+         picoefs <- c(1, ARMAtoMA(ar = -pars$macoefs, ma = -pars$arcoefs, lag.max = n-1))
+         tauIO <- resid / sigma
 
          
 
