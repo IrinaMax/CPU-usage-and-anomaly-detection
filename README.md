@@ -46,7 +46,7 @@ The data size is 1.97G, but after I used SQL context size of the data distribute
                3  1476400439 0.5760822
                4  1476400440 0.5026307
                5  1476400441 0.5440287
-                
+![cpu_usage](https://cloud.githubusercontent.com/assets/16123495/19978579/a9d2c548-a1b4-11e6-9aea-d2e536954738.png)                
                           
       tail(h)
                               time cpu_usage
