@@ -163,7 +163,7 @@ and play with time series packege
         #3rd Qu.:1.522e+09   3rd Qu.: 0.7989  
         #Max.   :1.538e+09   Max.   : 1.0347 
 
-I have 466558 anomaly detection in this data set.
+#We have have 466558 anomaly detection in this cpu data set.
 
 I am going to show visualisation on the sample because the dataset it too big to implement all graph.
 
@@ -205,7 +205,7 @@ chenging memory.size only if you need to
         library(TTR)
         library(tseries)
 
-MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
+#MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
         library(mclust)
         fit1 <- Mclust(h1,5)
         plot(fit1)     ## look the beautiful colerfull plots MCLUST
@@ -253,7 +253,7 @@ append cluster assignment where we can see a lot od outliers inevery cluster, wi
            mydata
            plot(mydata)  ## you can look plot of Cluster assignment
 ![cluster_assignment](https://cloud.githubusercontent.com/assets/16123495/19914698/e0e8362c-a069-11e6-914f-1c8ec40bec80.png)
-
+#Anomaly Detection Package
 This is detection Anomaly with Package "AnomalyDetection" which show very beautiful plot,
 but visualisation not possible with data 61 M and of cause I wanted to show the idea of the this powerful package,
 so implementation base on the part of day, data cpu usage, which still very huge but show pretty good result.
@@ -305,7 +305,7 @@ It was 142 anomaly during 24 hours time
           devtools::install_github("twitter/BreakoutDetection")
           library(BreakoutDetection)
           
-Arima model show the stationary and differences in the data.
+#Arima model show the stationary and differences in the data.
 
 A stationary time series is one whose properties do not depend on the time at which the series is observed.
 Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
@@ -411,7 +411,7 @@ If we look at Rplot_residual_vs_fitted and we will see the horizontal red line, 
 
                  Warning message:
                  In adf.test(d.y) : p-value smaller than printed p-value
-ACF ( autocorrelationfunction) and PACF (partion autocorrelation function)
+#ACF ( autocorrelationfunction) and PACF (partion autocorrelation function)
            
            acf(y, main= " series of autocorrelation function")   
 We see that the series is stationary enough to do any kind of time series modelling.   (residual ac per units)
@@ -507,13 +507,14 @@ The Boxplot actually shows there are outliers here
  -----
 #Auto outliers with arima
 
-        arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
-        resid <- residuals(arima.fo)
->       pars <- coefs2poly(arima.fo)
->       outliers2 <- locate.outliers(resid, pars)
->       dim(outliers2)
+      
+       arima.fo<- arima(y, order = c(1, 1, 0), seasonal = list(order = c(2, 0, 2)))
+       resid <- residuals(arima.fo)
+       pars <- coefs2poly(arima.fo)
+       outliers2 <- locate.outliers(resid, pars)
+       dim(outliers2)
         [1] 9 4
->       plot(outliers2, main ="Possible anomaly as outliers with Arima")  ## look the plot 
+       plot(outliers2, main ="Possible anomaly as outliers with Arima")  ## look the plot 
 ![plot_auto_outliers_3](https://cloud.githubusercontent.com/assets/16123495/19978678/f6ec3166-a1b4-11e6-88eb-ff6d9fccae70.png)
 >       summary(outliers2) ##  result auto outliers
           type        ind          coefhat             tstat        
@@ -525,7 +526,8 @@ The Boxplot actually shows there are outliers here
                  Max.   :8587   Max.   : 0.44149   Max.   : 5.2581  
 	 
 #Prediction with arima
->        library(fracdiff)
+      
+         library(fracdiff)
 >        library("forecast", lib.loc="~/Library/R/3.3/library")
 >        fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
 >        summary(fit.arima)
@@ -567,8 +569,10 @@ Look plot Forecast with Arima model
  
  ******************************************
          plot(forecast(fitAr))    # Plot with auto arima
+	 
 ![poss_anomaly_arima](https://cloud.githubusercontent.com/assets/16123495/19978707/0e2ce55a-a1b5-11e6-92d7-92b7bb9aaea5.png)
-         pars <- coefs2poly(fitAr)
+        
+	pars <- coefs2poly(fitAr)
          resid <- residuals(fitAr)
          n <- length(resid)
  
