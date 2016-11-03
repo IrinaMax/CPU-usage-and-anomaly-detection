@@ -32,19 +32,20 @@ user  system elapsed
      print(object.size(SQLf), units="Mb")  ## to see the size of the data
      
 The data size is 1.97G, but after I used SQL context size of the data distributed in SQL 700.1 Mb    
-     require(data.table)
-     system.time(DT <- fread("data.csv"))  ## how long time will be read fread function
+    
+         require(data.table)
+        system.time(DT <- fread("data.csv"))  ## how long time will be read fread function
 
-    head(SQLf,10)
-    h <- as.data.frame(SQLf)
-    head(h,5)  
+         head(SQLf,10)
+         h <- as.data.frame(SQLf)
+           head(h,5)  
                               
-   ##                     time cpu_usage
-                 1  1476400437 0.4131848
-                 2  1476400438 0.4347889
-                 3  1476400439 0.5760822
-                 4  1476400440 0.5026307
-                 5  1476400441 0.5440287
+      ##                     time cpu_usage
+               1  1476400437 0.4131848
+               2  1476400438 0.4347889
+               3  1476400439 0.5760822
+               4  1476400440 0.5026307
+               5  1476400441 0.5440287
                 
                           
       tail(h)
