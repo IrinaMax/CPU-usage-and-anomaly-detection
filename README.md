@@ -163,7 +163,7 @@ and play with time series packege
         #3rd Qu.:1.522e+09   3rd Qu.: 0.7989  
         #Max.   :1.538e+09   Max.   : 1.0347 
 
-#We have have 466558 anomaly detection in this cpu data set.
+####We have have 466558 anomaly detection in this cpu data set.
 
 I am going to show visualisation on the sample because the dataset it too big to implement all graph.
 
@@ -190,12 +190,13 @@ I am going to show visualisation on the sample because the dataset it too big to
 R have a lot of packages and one show the beautiful clistering where you can see your data behavior 
 and aslo where and how data is distributed.
        
-       library (data.table)
+        library (data.table)
         install.packages("devtools")
         library(pryr)  
         mem_used()
         mem_change(x <- 1:2000e6)  
-chenging memory.size only if you need to 
+
+changing memory.size only if you need to 
 
         h1 <- read.csv("data.csv", nrow = 10000)
         #head(select(h1, starts_with(h1$time[[1:3]][1])))
@@ -205,7 +206,7 @@ chenging memory.size only if you need to
         library(TTR)
         library(tseries)
 
-#MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
+####MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
         library(mclust)
         fit1 <- Mclust(h1,5)
         plot(fit1)     ## look the beautiful colerfull plots MCLUST
@@ -525,7 +526,7 @@ The Boxplot actually shows there are outliers here
          SLS:0   3rd Qu.:7365   3rd Qu.: 0.37191   3rd Qu.: 3.9016  
                  Max.   :8587   Max.   : 0.44149   Max.   : 5.2581  
 	 
-#Prediction with arima
+#####Prediction with arima
       
          library(fracdiff)
 >        library("forecast", lib.loc="~/Library/R/3.3/library")
@@ -548,7 +549,7 @@ The Boxplot actually shows there are outliers here
             Warning message:
             In sqrt(diag(x$var.coef)) : NaNs produced
            plot(forecast(fit.arima,h=20), main= "Forecast with Arima Model time series"          
-Look plot Forecast with Arima model
+####Look plot Forecast with Arima model
 ![rplot_forecast_with_arima3](https://cloud.githubusercontent.com/assets/16123495/19978782/50ab8102-a1b5-11e6-9571-d0bbc5f6ab94.png)
            fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
            summary(fitAr)
