@@ -585,7 +585,7 @@ Look plot Forecast with Arima model
 
 There is a lot of interested packges and formulas in R and even MOA where I can show stream data but 
 you need to instal MOA-GUI visualisation toll for real time stream and WEKA on your computer to make my code on R work.
-Please go look other pages  with othe models of Anomaly Detection with amazing plots
+Please, go look at the other my pages with models of Anomaly Detection and amazing plots
 https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20Detection%20with%20Arima%20model
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/Anomaly%20detection
 and https://github.com/IrinaMax/CPU-usage-and-anomaly-detection/blob/master/MCLUST%20clustering%20analysis%20and%20visualisation
