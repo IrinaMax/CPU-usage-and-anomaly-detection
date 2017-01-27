@@ -211,12 +211,12 @@ changing memory.size only if you need to
         fit1 <- Mclust(h1,5)
         plot(fit1)     ## look the beautiful colerfull plots MCLUST
              Model-based clustering plots: 
-             1: BIC
-             2: classification
+    ####         1: BIC
+    ####         2: classification
 ![mclust_classification](https://cloud.githubusercontent.com/assets/16123495/19914683/c71a0284-a069-11e6-8e14-f50ad7dc398a.png)
-             3: uncertainty
+    ####         3: uncertainty
 ![mclust_uncertainty](https://cloud.githubusercontent.com/assets/16123495/19914692/d3e70a0c-a069-11e6-840e-1c85047506bd.png)           
-             4: density
+     ####        4: density
 ![mclust_dencitylog](https://cloud.githubusercontent.com/assets/16123495/19914685/cb64cc48-a069-11e6-92e8-deeee8ff5fcc.png)             
          summary(fit1)
          
@@ -285,7 +285,7 @@ the daily max values (p99).
        anomCPU3600 <- AnomalyDetectionVec(h1[,2], max_anoms=0.02, period=60, direction='both', only_last=FALSE, plot=TRUE)
        summary(anomCPU3600)
 
-The Rplot_anom_cpu_3600.png , shows the anomaly during few hours
+####The Rplot_anom_cpu_3600.png , shows the anomaly during few hours
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19914997/882cd198-a06c-11e6-8335-6966c34385e9.png)
              #Length Class      Mode
              #anoms 2      data.frame list
@@ -294,7 +294,7 @@ The Rplot_anom_cpu_3600.png , shows the anomaly during few hours
         anomCPU24_hour$anoms   ##  show all numbers and time of anomaly
         dim(anomCPU24_hour$anoms) 
         #[1] 141   2      
-It was 142 anomaly during 24 hours time
+####It was 142 anomaly during 24 hours time
 
           res = AnomalyDetectionTs(h1, 
                          max_anoms=0.02, 
@@ -306,7 +306,7 @@ It was 142 anomaly during 24 hours time
           devtools::install_github("twitter/BreakoutDetection")
           library(BreakoutDetection)
           
-#Arima model show the stationary and differences in the data.
+#####Arima model show the stationary and differences in the data.
 
 A stationary time series is one whose properties do not depend on the time at which the series is observed.
 Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
