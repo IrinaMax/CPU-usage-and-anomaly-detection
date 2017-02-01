@@ -531,6 +531,7 @@ The Boxplot actually shows there are outliers here
          library(fracdiff)
 >        library("forecast", lib.loc="~/Library/R/3.3/library")
 >        fit.arima <-arima(y, order = c(1, 1, 1), seasonal = list(order = c(2, 0, 2)))
+##### In seasonal hybrid the forst coef is Order of AR and Last is Order of MA
 >        summary(fit.arima)
 
          Call:
