@@ -17,7 +17,7 @@ Library pryr has a method to change memory of Rstudio, but it’s still not enou
     library(pryr)  
     ## always checking out the memory, may be its already extended... but if not you can make it bigger.
     mem_used()
-    ##chenging memory.size to 8 GB
+    ##changing memory.size to 8 GB
     mem_change(x <- 1:2000e6) 
 
 Loading big data set package Sqldf much faster 
