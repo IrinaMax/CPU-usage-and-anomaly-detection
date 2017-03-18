@@ -97,7 +97,7 @@ standart deviation in CPU usage 0.1004229
               
          mean (h$cpu_usage) 
               [1] 0.5002827     
-mean is 50% and it is obviouse
+mean is 50% and it is obviouse, we will find this value again in the t-test in confidence interval.
            
            z_score_h <- (h$cpu_usage - mean(h$cpu_usage))/sd(h$cpu_usage)
            head(z_score_h)
@@ -107,7 +107,7 @@ mean is 50% and it is obviouse
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
 Data is not normally distributed  and I reject Zero Hypothesis. The p-value is significant and it's Alternative Hypothesis.
-Confidence interval 95% confidence level.
+Here I can be 95% confident that the mean of the CPU utilization of this dataset between 50.02 and 50.03 percent, or most of the time CPU was used around 50% or so.
           
         t.test(h$cpu_usage )
                      One Sample t-test
@@ -145,7 +145,7 @@ and play with time series packege
         q2 = qu[3,1]
         q3 = qu[4,1]
         iqr <- q3-q1
-        w1 <-q1-1.5*iqr
+        w1 <- q1-1.5*iqr
         w2 <- q3 + 1.5*iqr
         # then combine all together 
         o.h <- subset(h, h$cpu_usage < q1-1.5*iqr)   
@@ -206,7 +206,7 @@ changing memory.size only if you need to
         library(TTR)
         library(tseries)
 
-####MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
+#### MCLUST show very beautiful Clustering Model where you can see the outliers base on 1: BIC, 2: classification, 3: uncertainty, 4: density
         library(mclust)
         fit1 <- Mclust(h1,5)
         plot(fit1)     ## look the beautiful colerfull plots MCLUST
@@ -254,6 +254,7 @@ append cluster assignment where we can see a lot od outliers inevery cluster, wi
            mydata
            plot(mydata)  ## you can look plot of Cluster assignment
 ![cluster_assignment](https://cloud.githubusercontent.com/assets/16123495/19914698/e0e8362c-a069-11e6-914f-1c8ec40bec80.png)
+
 #Anomaly Detection Package
 This is detection Anomaly with Package "AnomalyDetection" which show very beautiful plot,
 but visualisation not possible with data 61 M and of cause I wanted to show the idea of the this powerful package,
@@ -287,7 +288,8 @@ the daily max values (p99).
 
 ####The Rplot_anom_cpu_3600.png , shows the anomaly during few hours
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19914997/882cd198-a06c-11e6-8335-6966c34385e9.png)
-             #Length Class      Mode
+            
+	     #Length Class      Mode
              #anoms 2      data.frame list
              #plot  9      gg         list
 
@@ -306,7 +308,7 @@ the daily max values (p99).
           devtools::install_github("twitter/BreakoutDetection")
           library(BreakoutDetection)
           
-#####Arima model show the stationary and differences in the data.
+##### Arima model show the stationary and differences in the data.
 
 A stationary time series is one whose properties do not depend on the time at which the series is observed.
 Time plots  of CPU usage show the series to be roughly horizontal but without any cyclic behaviour.
@@ -339,6 +341,7 @@ suitably lagged and iterated differences
         -0.6418000 -0.0961700 -0.0006152 -0.0000232  0.0949100  0.6089000
        plot(t,y, main = " Arima CPU usage")  ## look plot Arima_CPU_sage
 ![a_cpu_usage](https://cloud.githubusercontent.com/assets/16123495/19879583/83c8caa0-9fb1-11e6-9c3c-8e92593c9a7e.png)       
+       
        plot(d.y, main = " CPU defference")    ##  look plot 
 ![a_cpu_diff](https://cloud.githubusercontent.com/assets/16123495/19879584/83cf136a-9fb1-11e6-9586-0bbe6451fd27.png)       
 
