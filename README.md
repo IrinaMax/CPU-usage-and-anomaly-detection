@@ -1,6 +1,6 @@
 # CPU-usage-and-anomaly-detection
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19879905/18d7fd52-9fb5-11e6-8b74-aadac1c68671.png)
-It is my work with the 2 GB data set of cpu usage
+##It is my work with the 2 GB data set of cpu usage
 ---
 title: "AnomalyDetection of cpu usage"
 author: "Irina Max"
