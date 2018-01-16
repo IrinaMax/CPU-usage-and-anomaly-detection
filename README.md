@@ -1,13 +1,14 @@
 # CPU-usage-and-anomaly-detection
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19879905/18d7fd52-9fb5-11e6-8b74-aadac1c68671.png)
-    my work with the 2 GB data set of cpu usage
+    
 ---
 title: "AnomalyDetection of cpu usage"
 author: "Irina Max"
 date: October14 2016
      
 ---
-I begin exploratory of the data set and couple of pages different models of my dynamic option and also automatic anomaly detection in time series data. The goal of this script is to get an overview of the characteristics and usage of the cpu in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used couple technique to download it and try to work with it.
+My work with the 2 GB data set of cpu usage on local R studio.
+I begun with exploratory of the data set and couple of pages different models of my dynamic option and also automatic anomaly detection in time series data. The goal of this script is to get an overview of the characteristics and usage of the cpu in the data.csv. The dataset is very huge and not easy to work with at R studio, so I used couple technique to download it and try to work with it.
 Visualisation possible to implement just with chunk of the random of the data, which absolutely normally to use to describe the data behavior.
 My study show that data is not normally distributed and the p-value is significant. I also try different method to upload huge data in R studio and work with it. 
 Library pryr has a method to change memory of Rstudio, but it’s still not enough to work with this data
