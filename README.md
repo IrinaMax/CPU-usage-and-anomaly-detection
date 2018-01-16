@@ -553,9 +553,11 @@ The Boxplot actually shows there are outliers here
             Warning message:
             In sqrt(diag(x$var.coef)) : NaNs produced
            plot(forecast(fit.arima,h=20), main= "Forecast with Arima Model time series"          
-####Look plot Forecast with Arima model
+#Look plot Forecast with Arima model
+
 ![rplot_forecast_with_arima3](https://cloud.githubusercontent.com/assets/16123495/19978782/50ab8102-a1b5-11e6-9571-d0bbc5f6ab94.png)
-           fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
+           
+	   fitAr <- forecast::auto.arima(x = y, allowdrift = FALSE, ic = "bic")
            summary(fitAr)
            Series:  
            ARIMA(0,0,0) with non-zero mean 
@@ -573,7 +575,9 @@ The Boxplot actually shows there are outliers here
           Training set 9.020453e-18 0.1000949 0.07976242 -4.635183 17.50735 0.7055494 -0.00829783
  
  ******************************************
-         plot(forecast(fitAr))    # Plot with auto arima
+         plot(forecast(fitAr))    
+
+# Plot with auto arima
 	 
 ![poss_anomaly_arima](https://cloud.githubusercontent.com/assets/16123495/19978707/0e2ce55a-a1b5-11e6-92d7-92b7bb9aaea5.png)
         
