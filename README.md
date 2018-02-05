@@ -125,8 +125,8 @@ Here I can be 95% confident that the mean of the CPU utilization of this dataset
 The avarage usage of the CPU is 50% and its resonable value.
 Model1 base on the dinamic quantiles and outliers usually has proportion < .15
 
-I am going to find anomalys as outliers by counting quantiles and dinamicly find location of them 
-and play with time series packege
+I am going to find anomalys as outliers by counting quantiles and dynamiclly find location of them 
+and play with time series package
 
         s <- ts(h[,2], start = 1476400427, end= 1537577313, frequency = 1 )
         s1 <- ts(h, start = 1476400427, end= 1537577313, frequency = 1 )
