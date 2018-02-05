@@ -2,9 +2,9 @@
 ![rplot_anom_cpu_3600](https://cloud.githubusercontent.com/assets/16123495/19879905/18d7fd52-9fb5-11e6-8b74-aadac1c68671.png)
     
 ---
-title: "AnomalyDetection of cpu usage"
+title: "Anomaly Detection of CPU Utilisation"
 author: "Irina Max"
-date: October14 2016
+date: September 14 2016
      
 ---
 My work with the 2 GB data set of cpu usage on local R studio.
