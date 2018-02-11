@@ -107,8 +107,8 @@ mean is 50% and it is obviouse, we will find this value again in the t-test in c
            -5.357000 -0.674000 -0.001797  0.000000  0.671100  5.321000 
 
 A technique for detecting anomalies in seasonal univariate time series where the input is a series of <timestamp, count> pairs.
-Data is not normally distributed  and I reject Zero Hypothesis. The p-value is significant and it's Alternative Hypothesis.
-Here I can be 95% confident that the mean of the CPU utilization of this dataset between 50.02 and 50.03 percent, or most of the time CPU was used around 50% or so.
+Data is roughly normally distributed but I reject Zero Hypothesis. The p-value is significant and it's Alternative Hypothesis.
+Here can be 95% confidence that the mean of the CPU utilization of this dataset between 50.02 and 50.03 percent, or most of the time CPU was used around 50% or so.
           
         t.test(h$cpu_usage )
                      One Sample t-test
